@@ -1,0 +1,61 @@
+﻿<Window x:Class="Interfacerobot.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:WpfAsservDisplay="clr-namespace:WpfAsservissementDisplay;assembly=WpfAsservissementDisplay"
+        xmlns:local="clr-namespace:Interfacerobot"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="773" Width="800" Background="White">
+    <Grid Background="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="132"/>
+            <RowDefinition Height="320"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
+        <WpfAsservDisplay:AsservissementXYThetaControl x:Name="AsservDisplay" Grid.Row="4" Grid.Column="3"   VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="2" Margin="0,12,0,2" Background="Black" />
+        <GroupBox x:Name="Reception" Header="Reception" Foreground="White" Margin="0" Background="Black" BorderBrush="Black" Grid.Column="3" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            <TextBox x:Name="TextBoxReception" Margin="0" TextWrapping="Wrap" Text="" TextChanged="textBox_TextChanged" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" IsReadOnly="True" />
+        </GroupBox>
+        <GroupBox x:Name="Emission" Header="Emission" Foreground="White" Margin="0" Background="black" BorderBrush="Black" Grid.Column="1" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            <TextBox x:Name="TextBoxEmission" Margin="0" TextWrapping="Wrap" Text="" TextChanged="textBox_TextChanged" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" AcceptsReturn="True" KeyUp="TextBoxEmission_KeyUp" />
+        </GroupBox>
+        <GroupBox x:Name="Leds" Header="Leds" Foreground="White" Margin="13,0,269,0" Background="Black" BorderBrush="Black" Grid.Row="3" Grid.ColumnSpan="2" />
+        <GroupBox x:Name="Telemetres" Header="Télemètres IR" Foreground="White" Margin="99,0,112,0" Background="Black" BorderBrush="Black" Grid.Column="1" Grid.Row="3" >
+            <TextBox x:Name="TextBoxTelemetres" Margin="0" TextWrapping="Wrap" Text="" TextChanged="textBox_TextChanged" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" IsReadOnly="True" />
+        </GroupBox>
+        <GroupBox x:Name="Moteurs" Header="Moteurs" Foreground="White" Margin="254,0,329,0" Background="Black" BorderBrush="Black" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" >
+            <TextBox x:Name="TextBoxMoteurs" Margin="0" TextWrapping="Wrap" Text="" TextChanged="textBox_TextChanged" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" IsReadOnly="True" />
+        </GroupBox>
+        <GroupBox x:Name="RtbState" Header="Robot state" Foreground="White" Background="Black" BorderBrush="Black" Grid.Row="3" Grid.Column="3" Margin="38,0,10,50">
+            <TextBox x:Name="RtbReception" Margin="0" TextWrapping="Wrap" Text="" TextChanged="textBox_TextChanged" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+        </GroupBox>
+        <GroupBox x:Name="Pilotage" Header="Pilotage Clavier" Foreground="White" Background="Black" BorderBrush="Black" Grid.Row="3" Grid.Column="3" Margin="39,90,10,0">
+            <TextBox x:Name="textBoxPilotage" Margin="0" TextWrapping="Wrap" Text="" TextChanged="textBox_TextChanged" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" IsReadOnly="True"/>
+        </GroupBox>
+        <GroupBox x:Name="BoxClavier" Header="" Grid.Column="3" Margin="220,94.6,5.4,4.2" Grid.Row="1" Foreground="White" BorderBrush="Black" Background="Black"  BorderThickness="0" Visibility="Hidden">
+        </GroupBox>
+        <GroupBox x:Name="BoxPosition" Header="Position from odometry" Foreground="White" Grid.Row="4" BorderBrush="Black" Background="Black" Margin="13,10,112,120" Grid.ColumnSpan="2">
+            <TextBox x:Name="textBoxPosition" Margin="0" TextWrapping="Wrap" Text="" TextChanged="textBox_TextChanged" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" IsReadOnly="True"  />
+        </GroupBox>
+        <Button x:Name="buttonEnvoyer" Content="clear" Grid.Column="1" Grid.Row="2" Margin="68,5,208,5" Background="White" Click="buttonEnvoyer_Click"/>
+        <Button x:Name="buttonTest" Content="Test " Grid.Column="1" Grid.Row="2" Margin="208,5,68,5"  Background="White" Click="buttonTest_Click" />
+        <Button x:Name="buttonControl" Content="Automatique" Grid.Column="3" Grid.Row="2" Margin="10,5,265,5" Background="White" Click="buttonControl_Click"/>
+        <Button x:Name="buttonReset" Content="Reset odometry" Grid.Column="1" Grid.Row="4" Margin="246,18,5,270" Background="White" Click="buttonReset_Click"/>
+        <CheckBox x:Name="CheckBoxLed1" Content="Led 1"  Foreground="White"  HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="0,30,0,0" Grid.Row="3"/>
+        <CheckBox x:Name="CheckBoxLed2" Content="Led 2"  Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="0,60,0,0" Grid.Row="3"/>
+        <CheckBox x:Name="CheckBoxLed3" Content="Led 3"  Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="0,90,0,0" Grid.Row="3"/>
+        <CheckBox x:Name="CheckBoxMessage" Content="Message Correct" Foreground="White" Grid.Column="3" HorizontalAlignment="Left" Margin="175,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>
