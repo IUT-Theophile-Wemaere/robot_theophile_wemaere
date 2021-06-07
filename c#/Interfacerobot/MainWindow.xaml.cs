@@ -19,6 +19,7 @@ using MouseKeyboardActivityMonitor.WinApi;
 using MouseKeyboardActivityMonitor;
 using System.Windows.Forms;
 using Utilities;
+using WpfAsservissementDisplay;
 
 namespace Interfacerobot
 {
@@ -29,7 +30,6 @@ namespace Interfacerobot
         DispatcherTimer timerAffichage;
         Robot robot = new Robot();
         private readonly KeyboardHookListener m_KeyboardHookManager;
-        public const double PI = 3.1415926535897931;
 
         int i;
         public MainWindow()
@@ -325,16 +325,17 @@ namespace Interfacerobot
                     tab = msgPayload.GetRange(8, 4);
                     robot.positionYOdo = tab.GetFloat();
                     tab = msgPayload.GetRange(12, 4);
-                    robot.AngleRadOdo = tab.GetFloat() * (float)(180 / PI);
+                    robot.AngleRadOdo = tab.GetFloat();
                     tab = msgPayload.GetRange(16, 4);
                     robot.vLinéaireOdo = tab.GetFloat();
                     tab = msgPayload.GetRange(20, 4);
-                    robot.vAngulaireOdo = tab.GetFloat() * (float)(180 /PI);
-                    textBoxPosition.Text = "Pos X: " + robot.positionXOdo.ToString() + "\n\r";
-                    textBoxPosition.Text += "Pos Y: " + robot.positionYOdo.ToString() + "\n\r";
+                    robot.vAngulaireOdo = tab.GetFloat() * (float)(180 /Math.PI);
+                    textBoxPosition.Text = "Pos X: " + (robot.positionXOdo * (180d / Math.PI)).ToString() + "\n\r";
+                    textBoxPosition.Text += "Pos Y: " + (robot.positionYOdo * (180d / Math.PI)).ToString() + "\n\r";
                     textBoxPosition.Text += "Angle en ° : " + robot.AngleRadOdo.ToString() + "\n\r";
                     textBoxPosition.Text += "Vitesse linéaire: " + robot.vLinéaireOdo.ToString() + "\n\r";
                     textBoxPosition.Text += "Vitesse Angulaire: " + robot.vAngulaireOdo.ToString();
+                    
                     break;
             }
         }
@@ -463,13 +464,13 @@ namespace Interfacerobot
                 UartEncodeAndSendMessage(0x0052, 1, new byte[] {0});
             }
         }
-
-        #endregion
-
         private void buttonReset_Click(object sender, RoutedEventArgs e)
         {
             UartEncodeAndSendMessage(0x0062,1, new byte[] {0});
         }
+
+        #endregion
+
     }
 }
 

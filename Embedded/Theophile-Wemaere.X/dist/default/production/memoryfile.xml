@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project>
-  <executable name="dist/default/production/Robot-Guinedor-Wemaere.X.production.elf">
+  <executable name="dist/default/production/Theophile-Wemaere.X.production.elf">
     <memory name="data">
       <units>bytes</units>
       <length>49152</length>
@@ -11,8 +11,8 @@
     <memory name="program">
       <units>bytes</units>
       <length>524514</length>
-      <used>11247</used>
-      <free>513267</free>
+      <used>11262</used>
+      <free>513252</free>
     </memory>
   </executable>
 </project>
