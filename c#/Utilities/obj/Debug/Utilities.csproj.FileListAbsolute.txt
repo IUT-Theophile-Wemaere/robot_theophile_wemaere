@@ -1,0 +1,11 @@
+C:\GitHub\robot_theophile_wemaere\c#\Utilities\bin\Debug\Utilities.dll
+C:\GitHub\robot_theophile_wemaere\c#\Utilities\bin\Debug\Utilities.pdb
+C:\GitHub\robot_theophile_wemaere\c#\Utilities\bin\Debug\Newtonsoft.Json.dll
+C:\GitHub\robot_theophile_wemaere\c#\Utilities\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\GitHub\robot_theophile_wemaere\c#\Utilities\bin\Debug\ICSharpCode.SharpZipLib.pdb
+C:\GitHub\robot_theophile_wemaere\c#\Utilities\bin\Debug\ZeroFormatter.dll
+C:\GitHub\robot_theophile_wemaere\c#\Utilities\bin\Debug\ZeroFormatter.Interfaces.dll
+C:\GitHub\robot_theophile_wemaere\c#\Utilities\obj\Debug\Utilities.csprojAssemblyReference.cache
+C:\GitHub\robot_theophile_wemaere\c#\Utilities\obj\Debug\Utilities.csproj.CopyComplete
+C:\GitHub\robot_theophile_wemaere\c#\Utilities\obj\Debug\Utilities.dll
+C:\GitHub\robot_theophile_wemaere\c#\Utilities\obj\Debug\Utilities.pdb

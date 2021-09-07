@@ -1,2 +1,16 @@
-C:\Github\robot-adrien-guinedor\c#\ExtendedSerialPort\obj\Debug\ExtendedSerialPort.csproj.CoreCompileInputs.cache
-D:\OneDrive\Drive\Documents\GitHub\robot-adrien-guinedor\c#\ExtendedSerialPort\obj\Debug\ExtendedSerialPort.csproj.CoreCompileInputs.cache
+C:\Github\Enseignement\Projet électronique\Code Source\ReliableSerialPort\ReliableSerialPort\bin\Debug\ExtendedSerialPort.dll
+C:\Github\Enseignement\Projet électronique\Code Source\ReliableSerialPort\ReliableSerialPort\bin\Debug\ExtendedSerialPort.pdb
+C:\Github\Enseignement\Projet électronique\Code Source\ReliableSerialPort\ReliableSerialPort\obj\Debug\ExtendedSerialPort.csprojAssemblyReference.cache
+C:\Github\Enseignement\Projet électronique\Code Source\ReliableSerialPort\ReliableSerialPort\obj\Debug\ExtendedSerialPort.csproj.CoreCompileInputs.cache
+C:\Github\Enseignement\Projet électronique\Code Source\ReliableSerialPort\ReliableSerialPort\obj\Debug\ExtendedSerialPort.dll
+C:\Github\Enseignement\Projet électronique\Code Source\ReliableSerialPort\ReliableSerialPort\obj\Debug\ExtendedSerialPort.pdb
+C:\Users\Valentin\Desktop\ExtendedSerialPort\bin\Debug\ExtendedSerialPort.dll
+C:\Users\Valentin\Desktop\ExtendedSerialPort\bin\Debug\ExtendedSerialPort.pdb
+C:\Users\Valentin\Desktop\ExtendedSerialPort\obj\Debug\ExtendedSerialPort.csprojAssemblyReference.cache
+C:\Users\Valentin\Desktop\ExtendedSerialPort\obj\Debug\ExtendedSerialPort.dll
+C:\Users\Valentin\Desktop\ExtendedSerialPort\obj\Debug\ExtendedSerialPort.pdb
+C:\GitHub\robot_theophile_wemaere\c#\ExtendedSerialPort\bin\Debug\ExtendedSerialPort.dll
+C:\GitHub\robot_theophile_wemaere\c#\ExtendedSerialPort\bin\Debug\ExtendedSerialPort.pdb
+C:\GitHub\robot_theophile_wemaere\c#\ExtendedSerialPort\obj\Debug\ExtendedSerialPort.csprojAssemblyReference.cache
+C:\GitHub\robot_theophile_wemaere\c#\ExtendedSerialPort\obj\Debug\ExtendedSerialPort.dll
+C:\GitHub\robot_theophile_wemaere\c#\ExtendedSerialPort\obj\Debug\ExtendedSerialPort.pdb

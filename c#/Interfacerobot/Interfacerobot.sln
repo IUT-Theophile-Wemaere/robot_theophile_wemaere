@@ -5,13 +5,13 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfacerobot", "Interfacerobot.csproj", "{4E97AF2E-471A-4971-ACE3-AC496AC8D615}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedSerialPort", "..\..\..\..\Users\Table2\Downloads\ExtendedSerialPort\ExtendedSerialPort.csproj", "{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "..\Utilities\Utilities.csproj", "{8E7D0DA4-9A13-4B18-A90E-0243BBCCE40A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfAsservissementDisplay", "..\WpfAsservissementDisplay\WpfAsservissementDisplay.csproj", "{F0A887E9-D0A2-47E3-994A-94A0DCAE8D4F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Constants", "..\Constants\Constants.csproj", "{0540B497-B2CE-40A1-84B5-3109CE2F3146}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedSerialPort", "..\ExtendedSerialPort\ExtendedSerialPort.csproj", "{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,14 +29,6 @@ Global
 		{4E97AF2E-471A-4971-ACE3-AC496AC8D615}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4E97AF2E-471A-4971-ACE3-AC496AC8D615}.Release|x64.ActiveCfg = Release|Any CPU
 		{4E97AF2E-471A-4971-ACE3-AC496AC8D615}.Release|x64.Build.0 = Release|Any CPU
-		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Debug|x64.Build.0 = Debug|Any CPU
-		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Release|Any CPU.Build.0 = Release|Any CPU
-		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Release|x64.ActiveCfg = Release|Any CPU
-		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Release|x64.Build.0 = Release|Any CPU
 		{8E7D0DA4-9A13-4B18-A90E-0243BBCCE40A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8E7D0DA4-9A13-4B18-A90E-0243BBCCE40A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E7D0DA4-9A13-4B18-A90E-0243BBCCE40A}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -61,6 +53,14 @@ Global
 		{0540B497-B2CE-40A1-84B5-3109CE2F3146}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0540B497-B2CE-40A1-84B5-3109CE2F3146}.Release|x64.ActiveCfg = Release|x64
 		{0540B497-B2CE-40A1-84B5-3109CE2F3146}.Release|x64.Build.0 = Release|x64
+		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Debug|x64.Build.0 = Debug|Any CPU
+		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Release|x64.ActiveCfg = Release|Any CPU
+		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

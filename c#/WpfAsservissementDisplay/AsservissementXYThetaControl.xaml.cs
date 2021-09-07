@@ -14,7 +14,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using
 using Utilities;
 
 namespace WpfAsservissementDisplay
@@ -133,7 +132,7 @@ namespace WpfAsservissementDisplay
               displayTimer = new Timer(100);
               displayTimer.Elapsed += DisplayTimer_Elapsed;
               displayTimer.Start();
-          }
+        }
 
           public void SetTitle(string titre)
           {
@@ -329,7 +328,7 @@ namespace WpfAsservissementDisplay
               this.corrLimitIM2 = corrLimitIM2;
               this.corrLimitDM1 = corrLimitDM1;
               this.corrLimitDM2 = corrLimitDM2;
-          }*/
-        }
+          }
+        
     }
 }

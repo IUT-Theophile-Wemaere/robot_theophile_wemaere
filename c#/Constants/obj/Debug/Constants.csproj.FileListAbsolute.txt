@@ -1,0 +1,5 @@
+C:\GitHub\robot_theophile_wemaere\c#\Constants\bin\Debug\Constants.dll
+C:\GitHub\robot_theophile_wemaere\c#\Constants\bin\Debug\Constants.pdb
+C:\GitHub\robot_theophile_wemaere\c#\Constants\obj\Debug\Constants.csprojAssemblyReference.cache
+C:\GitHub\robot_theophile_wemaere\c#\Constants\obj\Debug\Constants.dll
+C:\GitHub\robot_theophile_wemaere\c#\Constants\obj\Debug\Constants.pdb

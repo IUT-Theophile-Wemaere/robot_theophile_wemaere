@@ -35,7 +35,7 @@ namespace Interfacerobot
         public MainWindow()
         {
             InitializeComponent();
-            serialPort1 = new ReliableSerialPort("COM5", 115200, Parity.None, 8, StopBits.One);
+            serialPort1 = new ReliableSerialPort("COM6", 115200, Parity.None, 8, StopBits.One);
             serialPort1.DataReceived += SerialPort1_DataReceived;
             serialPort1.Open();
 
@@ -332,7 +332,7 @@ namespace Interfacerobot
                     robot.vAngulaireOdo = tab.GetFloat() * (float)(180 /Math.PI);
                     textBoxPosition.Text = "Pos X: " + (robot.positionXOdo * (180d / Math.PI)).ToString() + "\n\r";
                     textBoxPosition.Text += "Pos Y: " + (robot.positionYOdo * (180d / Math.PI)).ToString() + "\n\r";
-                    textBoxPosition.Text += "Angle en ° : " + robot.AngleRadOdo.ToString() + "\n\r";
+                    textBoxPosition.Text += "Angle en ° : " + (robot.AngleRadOdo*(180d/Math.PI)).ToString() + "\n\r";
                     textBoxPosition.Text += "Vitesse linéaire: " + robot.vLinéaireOdo.ToString() + "\n\r";
                     textBoxPosition.Text += "Vitesse Angulaire: " + robot.vAngulaireOdo.ToString();
                     

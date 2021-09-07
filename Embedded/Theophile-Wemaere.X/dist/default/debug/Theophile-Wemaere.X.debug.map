@@ -4,13 +4,13 @@ Tool Name:
   c:\program files\microchip\xc16\v1.60\bin\bin\..\bin/elf-ld.exe
 
 Command:
-  -TC:\\Users\\Table2\\AppData\\Local\\Temp\\tmp000008bc.00 \
-  -TC:\\Users\\Table2\\AppData\\Local\\Temp\\tmp000008bc.01 \
-  -TC:\\Users\\Table2\\AppData\\Local\\Temp\\tmp000008bc.02 \
-  -TC:\\Users\\Table2\\AppData\\Local\\Temp\\tmp000008bc.03 \
-  -TC:\\Users\\Table2\\AppData\\Local\\Temp\\tmp000008bc.04 \
-  -TC:\\Users\\Table2\\AppData\\Local\\Temp\\tmp000008bc.05 \
-  -TC:\\Users\\Table2\\AppData\\Local\\Temp\\tmp000008bc.06 \
+  -TC:\\Users\\TP_EO_6\\AppData\\Local\\Temp\\tmp00002d68.00 \
+  -TC:\\Users\\TP_EO_6\\AppData\\Local\\Temp\\tmp00002d68.01 \
+  -TC:\\Users\\TP_EO_6\\AppData\\Local\\Temp\\tmp00002d68.02 \
+  -TC:\\Users\\TP_EO_6\\AppData\\Local\\Temp\\tmp00002d68.03 \
+  -TC:\\Users\\TP_EO_6\\AppData\\Local\\Temp\\tmp00002d68.04 \
+  -TC:\\Users\\TP_EO_6\\AppData\\Local\\Temp\\tmp00002d68.05 \
+  -TC:\\Users\\TP_EO_6\\AppData\\Local\\Temp\\tmp00002d68.06 \
   -p33EP512GM306 \
   --mdfp=C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/dsPIC33E-GM-GP-MC-GU-MU_DFP/1.2.58/xc16 \
   -o \
@@ -45,7 +45,7 @@ Command:
   --defsym=__MPLAB_BUILD=1 \
   --defsym=__MPLAB_DEBUG=1 \
   --defsym=__DEBUG=1 \
-  --defsym=__MPLAB_DEBUGGER_ICD4=1 \
+  --defsym=__MPLAB_DEBUGGER_ICD3=1 \
   -Tp33EP512GM306.gld.07 \
   --stack=16 \
   --check-sections \
@@ -546,7 +546,7 @@ LOAD build/default/debug/Utilities.o
                     0x0001                  __MPLAB_BUILD = 0x1
                     0x0001                  __MPLAB_DEBUG = 0x1
                     0x0001                  __DEBUG = 0x1
-                    0x0001                  __MPLAB_DEBUGGER_ICD4 = 0x1
+                    0x0001                  __MPLAB_DEBUGGER_ICD3 = 0x1
 LOAD p33EP512GM306
 LOAD c:/program files/microchip/xc16/v1.60/bin/bin/../../lib\libfx-elf.a
                     0x557f0                  __FICD = 0x557f0
@@ -685,7 +685,7 @@ __FOSCSEL
 
 __FGS             0x0557fa          0x2
  *(__FGS.sec*)
- __FGS.sec        0x0557fa          0x2 /CW/_FGS`‚Q
+ __FGS.sec        0x0557fa          0x2 /CW/_FGSÀ‰N
                   0x0557fa                  __FGS.sec
 
 __FUID0
@@ -2696,7 +2696,7 @@ LOAD c:/program files/microchip/xc16/v1.60/bin/bin/../../lib\libm-elf.a
 LOAD c:/program files/microchip/xc16/v1.60/bin/bin/../../lib\liblega-c-elf.a
 END GROUP
 OUTPUT(dist/default/debug/Theophile-Wemaere.X.debug.elf elf32-pic30)
-LOAD /CW/_FGS`‚Q
+LOAD /CW/_FGSÀ‰N
 LOAD default_isr
 LOAD data_init
 
