@@ -29,6 +29,7 @@ namespace Interfacerobot
         ReliableSerialPort serialPort1;
         DispatcherTimer timerAffichage;
         Robot robot = new Robot();
+        AsservissementXYThetaControl asservissement = new AsservissementXYThetaControl();
         private readonly KeyboardHookListener m_KeyboardHookManager;
 
         int i;
@@ -105,6 +106,7 @@ namespace Interfacerobot
             RobotState=0x0050,
             Clavier=0x0053,
             Position=0x0061,
+            PID=0x0062
         }
 
         public enum StateRobot
@@ -329,13 +331,75 @@ namespace Interfacerobot
                     tab = msgPayload.GetRange(16, 4);
                     robot.vLinéaireOdo = tab.GetFloat();
                     tab = msgPayload.GetRange(20, 4);
-                    robot.vAngulaireOdo = tab.GetFloat() * (float)(180 /Math.PI);
-                    textBoxPosition.Text = "Pos X: " + (robot.positionXOdo * (180d / Math.PI)).ToString() + "\n\r";
-                    textBoxPosition.Text += "Pos Y: " + (robot.positionYOdo * (180d / Math.PI)).ToString() + "\n\r";
+                    robot.vAngulaireOdo = tab.GetFloat();
+                    textBoxPosition.Text = "Pos X: " + (robot.positionXOdo).ToString() + "\n\r";
+                    textBoxPosition.Text += "Pos Y: " + (robot.positionYOdo).ToString() + "\n\r";
                     textBoxPosition.Text += "Angle en ° : " + (robot.AngleRadOdo*(180d/Math.PI)).ToString() + "\n\r";
-                    textBoxPosition.Text += "Vitesse linéaire: " + robot.vLinéaireOdo.ToString() + "\n\r";
-                    textBoxPosition.Text += "Vitesse Angulaire: " + robot.vAngulaireOdo.ToString();
+                    textBoxPosition.Text += "Vitesse linéaire en m.s-1 : " + robot.vLinéaireOdo.ToString() + "\n\r";
+                    textBoxPosition.Text += "Vitesse Angulaire en rad.s-1 : " + robot.vAngulaireOdo.ToString();
                     
+                    break;
+
+                case Functions.PID:
+                    double vAngError;
+                    double vAngCommand;
+                    double KpAng;
+                    double CorrectKpAng;
+                    double KiAng;
+                    double CorrectKiAng;
+                    double KdAng;
+                    double CorrectKdAng;
+
+                    double vLinError;
+                    double vLinCommand;
+                    double KpLin;
+                    double CorrectKpLin;
+                    double KiLin;
+                    double CorrectKiLin;
+                    double KdLin;
+                    double CorrectKdLin;
+
+                    byte[] tabPID = msgPayload.GetRange(0, 4);
+                    vAngError = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(4, 4);
+                    vAngCommand = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(8, 4);
+                    KpAng = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(12, 4);
+                    CorrectKpAng = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(16, 4);
+                    KiAng = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(20, 4);
+                    CorrectKiAng = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(24, 4);
+                    KdAng = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(28, 4);
+                    CorrectKdAng = tabPID.GetFloat();
+
+                    tabPID = msgPayload.GetRange(32, 4);
+                    vLinError = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(36, 4);
+                    vLinCommand = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(40, 4);
+                    KpLin = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(44, 4);
+                    CorrectKpLin = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(48, 4);
+                    KiLin = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(52, 4);
+                    CorrectKiLin = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(56, 4);
+                    KdLin = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(60, 4);
+                    CorrectKdLin = tabPID.GetFloat();
+
+                    //asservissement.UpdatePolarSpeedConsigneValues();
+                    asservissement.UpdatePolarSpeedCommandValues(vLinCommand, vAngCommand);
+                    asservissement.UpdatePolarOdometrySpeed(robot.vLinéaireOdo, robot.vAngulaireOdo);
+                    asservissement.UpdatePolarSpeedErrorValues(vLinError, vAngError);
+                    asservissement.UpdatePolarSpeedCorrectionGains(KpLin, KpAng, KiLin, KiAng, KdLin, KdAng);
+                    asservissement.UpdatePolarSpeedCorrectionValues(CorrectKpLin, CorrectKpAng, CorrectKiLin, CorrectKiAng, CorrectKdLin, CorrectKdAng);
+
                     break;
             }
         }
@@ -348,39 +412,56 @@ namespace Interfacerobot
             {
                 switch (e.KeyCode)
                 {
-                    case Keys.Left:
-                        UartEncodeAndSendMessage(0x0051, 1, new byte[] { (byte)StateRobot.STATE_TOURNE_SUR_PLACE_GAUCHE });
-                        //TextBoxReception.Text = "Left\n\r";
-                        imageBrush.ImageSource = new BitmapImage(new Uri("keyboard_key_left.png", UriKind.Relative));
-                        BoxClavier.Background = imageBrush;
-                        break;
+                    //case Keys.Left:
+                    //    UartEncodeAndSendMessage(0x0051, 1, new byte[] { (byte)StateRobot.STATE_TOURNE_SUR_PLACE_GAUCHE });
+                    //    //TextBoxReception.Text = "Left\n\r";
+                    //    imageBrush.ImageSource = new BitmapImage(new Uri("keyboard_key_left.png", UriKind.Relative));
+                    //    BoxClavier.Background = imageBrush;
+                    //    break;
 
-                    case Keys.Right:
-                        UartEncodeAndSendMessage(0x0051, 1, new byte[] { (byte)StateRobot.STATE_TOURNE_SUR_PLACE_DROITE });
-                        //TextBoxReception.Text = "Right\n\r";
-                        imageBrush.ImageSource = new BitmapImage(new Uri("keyboard_key_right.png", UriKind.Relative));
-                        BoxClavier.Background = imageBrush;
-                        break;
+                    //case Keys.Right:
+                    //    UartEncodeAndSendMessage(0x0051, 1, new byte[] { (byte)StateRobot.STATE_TOURNE_SUR_PLACE_DROITE });
+                    //    //TextBoxReception.Text = "Right\n\r";
+                    //    imageBrush.ImageSource = new BitmapImage(new Uri("keyboard_key_right.png", UriKind.Relative));
+                    //    BoxClavier.Background = imageBrush;
+                    //    break;
+
+                    //case Keys.Up:
+                    //    UartEncodeAndSendMessage(0x0051, 1, new byte[] { (byte)StateRobot.STATE_AVANCE });
+                    //    //TextBoxReception.Text = "up\n\r";
+                    //    imageBrush.ImageSource = new BitmapImage(new Uri("keyboard_key_up.png", UriKind.Relative));
+                    //    BoxClavier.Background = imageBrush;
+                    //    break;
+
+                    //case Keys.Down:
+                    //    UartEncodeAndSendMessage(0x0051, 1, new byte[] { (byte)StateRobot.STATE_RECULE });
+                    //    //TextBoxReception.Text = "down\n\r";
+                    //    imageBrush.ImageSource = new BitmapImage(new Uri("keyboard_key_down.png", UriKind.Relative));
+                    //    BoxClavier.Background = imageBrush;
+                    //    break;
+
+                    //case Keys.PageDown:
+                    //    UartEncodeAndSendMessage(0x0051, 1, new byte[] { (byte)StateRobot.STATE_ARRET });
+                    //    //TextBoxReception.Text = "Pagedown\n\r";
+                    //    imageBrush.ImageSource = new BitmapImage(new Uri("keyboard_key_page_down.png", UriKind.Relative));
+                    //    BoxClavier.Background = imageBrush;
+                    //    break;
+
 
                     case Keys.Up:
-                        UartEncodeAndSendMessage(0x0051, 1, new byte[] { (byte)StateRobot.STATE_AVANCE });
-                        //TextBoxReception.Text = "up\n\r";
-                        imageBrush.ImageSource = new BitmapImage(new Uri("keyboard_key_up.png", UriKind.Relative));
-                        BoxClavier.Background = imageBrush;
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(0.3), 0});
                         break;
 
                     case Keys.Down:
-                        UartEncodeAndSendMessage(0x0051, 1, new byte[] { (byte)StateRobot.STATE_RECULE });
-                        //TextBoxReception.Text = "down\n\r";
-                        imageBrush.ImageSource = new BitmapImage(new Uri("keyboard_key_down.png", UriKind.Relative));
-                        BoxClavier.Background = imageBrush;
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(-0.3), 0 });
                         break;
 
-                    case Keys.PageDown:
-                        UartEncodeAndSendMessage(0x0051, 1, new byte[] { (byte)StateRobot.STATE_ARRET });
-                        //TextBoxReception.Text = "Pagedown\n\r";
-                        imageBrush.ImageSource = new BitmapImage(new Uri("keyboard_key_page_down.png", UriKind.Relative));
-                        BoxClavier.Background = imageBrush;
+                    case Keys.Left:
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(0.2), Convert.ToByte(0.2) });
+                        break;
+
+                    case Keys.Right:
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(0.2), Convert.ToByte(-0.2) });
                         break;
                 }
             }

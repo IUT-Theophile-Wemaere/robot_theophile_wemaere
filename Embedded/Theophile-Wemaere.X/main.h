@@ -8,5 +8,6 @@ void SetNextRobotStateInAutomaticMode(void);
 void SetRobotState(unsigned char RobotState);
 void SetRobotAutoControlState(unsigned char SetRobotState);
 void SendRobotState(void);
+void SetRobotSpeed(float linear, float angular);
 
 #endif

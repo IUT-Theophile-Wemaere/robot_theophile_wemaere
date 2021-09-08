@@ -2,6 +2,7 @@
 {
     public class AsservissementPID
     {
+
         public double Kp { get; private set; }
         public double Ki { get; private set; }
         public double Kd { get; private set; }

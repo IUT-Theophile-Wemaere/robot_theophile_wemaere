@@ -4,6 +4,7 @@
 #include "CB_TX1.h"
 #include "UART.h"
 #include "main.h"
+#include "toolbox.h"
 
 int msgDecodedFunction = 0;
 int msgDecodedPayloadLength = 0;
@@ -128,10 +129,10 @@ void UartProcessDecodedMessage(unsigned char function,unsigned char payloadLengt
 {
     switch(function)
     {
-        case SET_ROBOT_STATE:
-            
+        case SET_ROBOT_STATE: 
             SetRobotState(payload[0]);
             UartEncodeAndSendMessage(0x0053,1, payload);
+            break;
         
         case SET_ROBOT_MANUAL_CONTROL:
             SetRobotAutoControlState(payload[0]);
@@ -139,6 +140,10 @@ void UartProcessDecodedMessage(unsigned char function,unsigned char payloadLengt
         
         case RESET_ODO:
             reset=1;
+        break;
+        
+        case SET_SPEED:
+            SetRobotSpeed(payload[0],payload[1]);
         break;
     }
 }
