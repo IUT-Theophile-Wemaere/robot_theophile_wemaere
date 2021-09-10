@@ -1,7 +1,7 @@
 #include <xc.h> // library xc.h inclut tous les uC
 #include "IO.h"
 #include "PWM.h"
-#include "Robot.h"
+#include "robot.h"
 #include "toolBox.h"
 #include "timer.h"
 #include "QEI.h"
@@ -120,7 +120,6 @@ void PWMSetSpeedConsigne(float vitesseEnpourcents, int moteur) {
 }
 
 void PWMSetSpeedConsignePolaire() {
-
     /****************** CorrectionAngulaire **********************/
     robotState.vitesseAngulaireErreur = robotState.vitesseAngulaireConsigne - robotState.vitesseAngulaireFromOdometry;
 

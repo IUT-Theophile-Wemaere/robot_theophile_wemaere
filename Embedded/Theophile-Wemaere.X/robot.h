@@ -44,7 +44,6 @@ typedef struct robotStateBITS {
             double KiAngulaireMax;
             double KdAngulaireMax;
 
-
             double vitesseLineaireConsigne;
             double vitesseLineaireCommande;
             double vitesseLineaireErreur;
@@ -52,7 +51,6 @@ typedef struct robotStateBITS {
             double CorrectionLineaireKp;
             double CorrectionLineaireKi;
             double CorrectionLineaireKd;
-
 
             double vitesseAngulaireConsigne;
             double vitesseAngulaireCommande;

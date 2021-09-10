@@ -15,6 +15,7 @@
 #include "CB_RX1.h"
 #include "UART_Protocol.h"
 #include "QEI.h"
+#include "Asservissement.h"
 
 #define STATE_ATTENTE 0
 #define STATE_ATTENTE_EN_COURS 1
@@ -67,6 +68,13 @@ int main(void) {
     InitUART();
     InitQEI1();
     InitQEI2();
+
+    SetUpPiAsservissementVitesseAngulaire();
+    SetUpPiAsservissementVitesseLineaire();
+    
+    robotState.vitesseAngulaireConsigne = 200;
+    robotState.vitesseLineaireConsigne = 200;
+
     //   PWMSetSpeedConsigne(-20, MOTEUR_DROIT);
     //   PWMSetSpeedConsigne(-20, MOTEUR_GAUCHE);
 
@@ -94,7 +102,6 @@ int main(void) {
         }
 
         QEIUpdateData();
-        PWMSetSpeedConsignePolaire();
     }
     return (EXIT_SUCCESS);
 }

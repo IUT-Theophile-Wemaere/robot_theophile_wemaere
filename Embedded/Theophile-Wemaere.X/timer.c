@@ -79,23 +79,22 @@ void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
     IFS0bits.T1IF = 0;
     ADC1StartConversionSequence();
     PWMUpdateSpeed();
-        
-    if (subSamplingCounterT1++ % 10 == 0) 
-    {
-//        unsigned char MOTEUR[] = {MOTEUR_GAUCHE_DUTY_CYCLE/40,MOTEUR_DROIT_DUTY_CYCLE/40} ;
-//        unsigned char LED1[] = {1, LED_ORANGE};
-//        unsigned char LED2[] = {2, LED_BLEUE};
-//        unsigned char LED3[] = {3, LED_BLANCHE};
-//        UartEncodeAndSendMessage(0x0040, 2, MOTEUR);
-//        UartEncodeAndSendMessage(0x0020, 2, LED1);
-//        UartEncodeAndSendMessage(0x0020, 2, LED2);
-//        UartEncodeAndSendMessage(0x0020, 2, LED3);
-//        unsigned char IR[] = {robotState.distanceTelemetreDroit,robotState.distanceTelemetreCentre,robotState.distanceTelemetreGauche};
-//        UartEncodeAndSendMessage(0x0030,3,IR); 
-//        SendPositionData();
+
+    if (subSamplingCounterT1++ % 10 == 0) {
+        //        unsigned char MOTEUR[] = {MOTEUR_GAUCHE_DUTY_CYCLE/40,MOTEUR_DROIT_DUTY_CYCLE/40} ;
+        //        unsigned char LED1[] = {1, LED_ORANGE};
+        //        unsigned char LED2[] = {2, LED_BLEUE};
+        //        unsigned char LED3[] = {3, LED_BLANCHE};
+        //        UartEncodeAndSendMessage(0x0040, 2, MOTEUR);
+        //        UartEncodeAndSendMessage(0x0020, 2, LED1);
+        //        UartEncodeAndSendMessage(0x0020, 2, LED2);
+        //        UartEncodeAndSendMessage(0x0020, 2, LED3);
+        //        unsigned char IR[] = {robotState.distanceTelemetreDroit,robotState.distanceTelemetreCentre,robotState.distanceTelemetreGauche};
+        //        UartEncodeAndSendMessage(0x0030,3,IR); 
+        //        SendPositionData();
         SendPIDData();
     }
-    
+
     //LED_BLANCHE = !LED_BLANCHE; 
 }
 
@@ -133,5 +132,6 @@ void __attribute__((interrupt, no_auto_psv)) _T4Interrupt(void) {
     IFS1bits.T4IF = 0;
     timestamp++;
     //OperatingSystemLoop();
+    PWMSetSpeedConsignePolaire();
 }
 
