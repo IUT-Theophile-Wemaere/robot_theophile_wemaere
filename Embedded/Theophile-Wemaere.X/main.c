@@ -72,8 +72,8 @@ int main(void) {
     SetUpPiAsservissementVitesseAngulaire();
     SetUpPiAsservissementVitesseLineaire();
     
-    robotState.vitesseAngulaireConsigne = 200;
-    robotState.vitesseLineaireConsigne = 200;
+    robotState.vitesseAngulaireConsigne = 0; //en rad.s-1
+    robotState.vitesseLineaireConsigne = 0; // en m.s-1
 
     //   PWMSetSpeedConsigne(-20, MOTEUR_DROIT);
     //   PWMSetSpeedConsigne(-20, MOTEUR_GAUCHE);

@@ -125,7 +125,8 @@ void PWMSetSpeedConsignePolaire() {
 
     robotState.CorrectionAngulaireKp = robotState.KpAngulaire * robotState.vitesseAngulaireErreur;
     robotState.CorrectionAngulaireKp = LimitToInterval1(robotState.CorrectionAngulaireKp, -robotState.KpAngulaireMax, robotState.KpAngulaireMax);
-    robotState.CorrectionAngulaireKi = (robotState.KiAngulaire * robotState.vitesseAngulaireErreur) / FREQ_ECH_QEI + robotState.CorrectionAngulaireKi;
+    
+    robotState.CorrectionAngulaireKi = ((robotState.KiAngulaire * robotState.vitesseAngulaireErreur) / FREQ_ECH_QEI) + robotState.CorrectionAngulaireKi;
     robotState.CorrectionAngulaireKi = LimitToInterval1(robotState.CorrectionAngulaireKi, -robotState.KiAngulaireMax, robotState.KiAngulaireMax);
 
     robotState.CorrectionAngulaireKd = (robotState.vitesseAngulaireFromOdometry_1 - robotState.vitesseAngulaireFromOdometry) * FREQ_ECH_QEI;
@@ -140,7 +141,7 @@ void PWMSetSpeedConsignePolaire() {
 
     robotState.CorrectionLineaireKp = robotState.KpLineaire * robotState.vitesseLineaireErreur;
     robotState.CorrectionLineaireKp = LimitToInterval1(robotState.CorrectionLineaireKp, -robotState.KpLineaireMax, robotState.KpLineaireMax);
-    robotState.CorrectionLineaireKi = (robotState.KiLineaire * robotState.vitesseLineaireErreur) / FREQ_ECH_QEI + robotState.CorrectionLineaireKi;
+    robotState.CorrectionLineaireKi = ((robotState.KiLineaire * robotState.vitesseLineaireErreur) / FREQ_ECH_QEI) + robotState.CorrectionLineaireKi;
     robotState.CorrectionLineaireKi = LimitToInterval1(robotState.CorrectionLineaireKi, -robotState.KiLineaireMax, robotState.KiLineaireMax);
 
     robotState.vitesseLineaireCorrection = robotState.CorrectionLineaireKp + robotState.CorrectionLineaireKi;
@@ -152,9 +153,9 @@ void PWMSetSpeedConsignePolaire() {
 
     /************* Génération des consignes droites et gauches ******************/
     robotState.vitesseDroiteConsigne = robotState.vitesseLineaireCommande + robotState.vitesseAngulaireCommande * DISTROUES / 2;
-    robotState.vitesseDroiteConsigne = LimitToInterval1(robotState.vitesseDroiteConsigne, -100, 100);
+    robotState.vitesseDroiteConsigne = LimitToInterval1(robotState.vitesseDroiteConsigne, -90, 100);
     robotState.vitesseGaucheConsigne = robotState.vitesseLineaireCommande - robotState.vitesseAngulaireCommande * DISTROUES / 2;
-    robotState.vitesseGaucheConsigne = LimitToInterval1(robotState.vitesseGaucheConsigne, -100, 100);
+    robotState.vitesseGaucheConsigne = LimitToInterval1(robotState.vitesseGaucheConsigne, -90, 100);
 }
 
 void SendPIDData(void) {
