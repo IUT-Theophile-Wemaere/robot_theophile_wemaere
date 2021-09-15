@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "CB_TX1.h"
-#define CBTX1_BUFFER_SIZE 128
+#define CBTX1_BUFFER_SIZE 255
 
-int cbTx1Head;
-int cbTx1Tail;
+int cbTx1Head=0;
+int cbTx1Tail=0;
 unsigned char cbTx1Buffer[CBTX1_BUFFER_SIZE];
 unsigned char isTransmitting =0;
 
@@ -26,7 +26,7 @@ void SendMessage(unsigned char* message, int length)
 void CB_TX1_Add(unsigned char value) 
 {
     cbTx1Buffer[cbTx1Head] = value;
-    if(cbTx1Head >= 127)
+    if(cbTx1Head >= CBTX1_BUFFER_SIZE-1 )
         cbTx1Head=0;
     else 
         cbTx1Head+=1;
@@ -36,7 +36,7 @@ unsigned char CB_TX1_Get(void)
 {
     unsigned char buffer = cbTx1Buffer[cbTx1Tail];
     
-    if (cbTx1Tail >= 127)
+    if (cbTx1Tail >= CBTX1_BUFFER_SIZE-1)
         cbTx1Tail=0;
     else 
         cbTx1Tail++;

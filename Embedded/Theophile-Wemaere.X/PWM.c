@@ -113,9 +113,9 @@ void PWMUpdateSpeed(void) {
 
 void PWMSetSpeedConsigne(float vitesseEnpourcents, int moteur) {
     if (moteur == 0) {
-        robotState.vitesseDroiteConsigne = -vitesseEnpourcents;
+        robotState.vitesseDroiteConsigne = vitesseEnpourcents;
     } else {
-        robotState.vitesseGaucheConsigne = -vitesseEnpourcents;
+        robotState.vitesseGaucheConsigne = vitesseEnpourcents;
     }
 }
 
@@ -123,17 +123,19 @@ void PWMSetSpeedConsignePolaire() {
     /********************** Correction Angulaire **********************/
     robotState.vitesseAngulaireErreur = robotState.vitesseAngulaireConsigne - robotState.vitesseAngulaireFromOdometry;
 
-    robotState.CorrectionAngulaireKp = robotState.KpAngulaire * robotState.vitesseAngulaireErreur;
-    robotState.CorrectionAngulaireKp = LimitToInterval1(robotState.CorrectionAngulaireKp, -robotState.KpAngulaireMax, robotState.KpAngulaireMax);
+    //    robotState.CorrectionAngulaireKp = robotState.KpAngulaire * robotState.vitesseAngulaireErreur;
+    //    robotState.CorrectionAngulaireKp = LimitToInterval1(robotState.CorrectionAngulaireKp, -robotState.KpAngulaireMax, robotState.KpAngulaireMax);
+    //
+    //    robotState.CorrectionAngulaireKi = ((robotState.KiAngulaire * robotState.vitesseAngulaireErreur) / FREQ_ECH_QEI) + robotState.CorrectionAngulaireKi;
+    //    //robotState.CorrectionAngulaireKi = LimitToInterval1(robotState.CorrectionAngulaireKi, -robotState.KiAngulaireMax, robotState.KiAngulaireMax);
+    //
+    //    robotState.CorrectionAngulaireKd = (robotState.vitesseAngulaireFromOdometry_1 - robotState.vitesseAngulaireFromOdometry) * FREQ_ECH_QEI;
+    //    robotState.CorrectionAngulaireKd = LimitToInterval1(robotState.CorrectionAngulaireKd, -robotState.KdAngulaireMax, robotState.KdAngulaireMax);
+    //
+    //    robotState.vitesseAngulaireCorrection = robotState.CorrectionAngulaireKp + robotState.CorrectionAngulaireKi;
+    //    robotState.vitesseAngulaireCommande = robotState.vitesseAngulaireCorrection * COEFF_VITESSE_ANGULAIRE_PERCENT;
 
-    robotState.CorrectionAngulaireKi = ((robotState.KiAngulaire * robotState.vitesseAngulaireErreur) / FREQ_ECH_QEI) + robotState.CorrectionAngulaireKi;
-    //robotState.CorrectionAngulaireKi = LimitToInterval1(robotState.CorrectionAngulaireKi, -robotState.KiAngulaireMax, robotState.KiAngulaireMax);
-
-    robotState.CorrectionAngulaireKd = (robotState.vitesseAngulaireFromOdometry_1 - robotState.vitesseAngulaireFromOdometry) * FREQ_ECH_QEI;
-    robotState.CorrectionAngulaireKd = LimitToInterval1(robotState.CorrectionAngulaireKd, -robotState.KdAngulaireMax, robotState.KdAngulaireMax);
-
-    robotState.vitesseAngulaireCorrection = robotState.CorrectionAngulaireKp + robotState.CorrectionAngulaireKi;
-    robotState.vitesseAngulaireCommande = robotState.vitesseAngulaireCorrection * COEFF_VITESSE_ANGULAIRE_PERCENT;
+    robotState.vitesseAngulaireCommande = robotState.vitesseAngulaireConsigne * COEFF_VITESSE_ANGULAIRE_PERCENT;
 
     /********************** Correction Lineaire *****************************/
     robotState.vitesseLineaireErreur = robotState.vitesseLineaireConsigne - robotState.vitesseLineaireFromOdometry;
@@ -150,15 +152,17 @@ void PWMSetSpeedConsignePolaire() {
     robotState.vitesseLineaireCorrection = robotState.CorrectionLineaireKp + robotState.CorrectionLineaireKi;
     robotState.vitesseLineaireCommande = robotState.vitesseLineaireCorrection * COEFF_VITESSE_LINEAIRE_PERCENT;
 
+    robotState.vitesseLineaireCommande = robotState.vitesseLineaireConsigne * COEFF_VITESSE_LINEAIRE_PERCENT;
+
     /************* Génération des consignes droites et gauches ******************/
     robotState.vitesseDroiteConsigne = (robotState.vitesseLineaireCommande + robotState.vitesseAngulaireCommande * DISTROUES / 2);
     robotState.vitesseDroiteConsigne = LimitToInterval1(robotState.vitesseDroiteConsigne, -100, 100);
-    robotState.vitesseGaucheConsigne = -(robotState.vitesseLineaireCommande - robotState.vitesseAngulaireCommande * DISTROUES / 2);
+    robotState.vitesseGaucheConsigne = (robotState.vitesseLineaireCommande - robotState.vitesseAngulaireCommande * DISTROUES / 2);
     robotState.vitesseGaucheConsigne = LimitToInterval1(robotState.vitesseGaucheConsigne, -100, 100);
 }
 
 void SendPIDData(void) {
-    unsigned char payloadPID[64];
+    unsigned char payloadPID[96];
 
     getBytesFromFloat(payloadPID, 0, (float) robotState.vitesseAngulaireErreur);
     getBytesFromFloat(payloadPID, 4, (float) (robotState.vitesseAngulaireCommande));
@@ -177,5 +181,16 @@ void SendPIDData(void) {
     getBytesFromFloat(payloadPID, 52, (float) (robotState.CorrectionLineaireKi));
     getBytesFromFloat(payloadPID, 56, (float) (robotState.KdLineaire));
     getBytesFromFloat(payloadPID, 60, (float) (robotState.CorrectionLineaireKd));
-    UartEncodeAndSendMessage(ASSERVISSEMENT, 64, payloadPID);
+
+    getBytesFromFloat(payloadPID, 64, (float) robotState.vitesseAngulaireConsigne);
+    getBytesFromFloat(payloadPID, 68, (float) robotState.vitesseLineaireConsigne);
+
+    getBytesFromFloat(payloadPID, 72, (float) robotState.KpAngulaireMax);
+    getBytesFromFloat(payloadPID, 76, (float) robotState.KiAngulaireMax);
+    getBytesFromFloat(payloadPID, 80, (float) robotState.KdAngulaireMax);
+    getBytesFromFloat(payloadPID, 84, (float) robotState.KpLineaireMax);
+    getBytesFromFloat(payloadPID, 88, (float) robotState.KiLineaireMax);
+    getBytesFromFloat(payloadPID, 92, (float) robotState.KdLineaireMax);
+
+    UartEncodeAndSendMessage(ASSERVISSEMENT, 96, payloadPID);
 }

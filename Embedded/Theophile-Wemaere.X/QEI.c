@@ -47,8 +47,8 @@ void QEIUpdateData(void)
     QEI2RawValue += ((long)POS2HLD<<16);
 
     // Conversion en mm ( r\ 'egl \ 'e pour la taille des roues codeuses )
-    QeiDroitPosition = -POINT_TO_METER*QEI1RawValue ;
-    QeiGauchePosition = POINT_TO_METER*QEI2RawValue;
+    QeiDroitPosition = POINT_TO_METER*QEI1RawValue ;
+    QeiGauchePosition = -POINT_TO_METER*QEI2RawValue;
 
     //calcul des deltas de positions
     delta_d = QeiDroitPosition - QeiDroitPosition_T_1; 
@@ -67,6 +67,7 @@ void QEIUpdateData(void)
     
     robotState.vitesseDroitFromOdometry = delta_d*FREQ_ECH_QEI;
     robotState.vitesseGaucheFromOdometry = delta_g*FREQ_ECH_QEI;
+    
     robotState.vitesseLineaireFromOdometry = (robotState.vitesseDroitFromOdometry + robotState.vitesseGaucheFromOdometry)/2;
     robotState.vitesseAngulaireFromOdometry = delta_theta*FREQ_ECH_QEI;
 
@@ -88,7 +89,7 @@ void QEIUpdateData(void)
 void SendPositionData(void)
 {
     unsigned char positionPayload[24];
-    getBytesFromInt32(positionPayload,0,timestamp ) ;
+    getBytesFromInt32(positionPayload,0,timestamp );
     getBytesFromFloat ( positionPayload,4,(float)(robotState.xPosFromOdometry)) ;
     getBytesFromFloat ( positionPayload,8,(float)(robotState.yPosFromOdometry)) ;
     getBytesFromFloat ( positionPayload,12,(float)(robotState.angleRadianFromOdometry));

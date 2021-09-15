@@ -29,14 +29,14 @@ namespace Interfacerobot
         ReliableSerialPort serialPort1;
         DispatcherTimer timerAffichage;
         Robot robot = new Robot();
-        AsservissementXYThetaControl asservissement = new AsservissementXYThetaControl();
+        //AsservissementXYThetaControl asservissement = new AsservissementXYThetaControl();
         private readonly KeyboardHookListener m_KeyboardHookManager;
 
         int i;
         public MainWindow()
         {
             InitializeComponent();
-            serialPort1 = new ReliableSerialPort("COM6", 115200, Parity.None, 8, StopBits.One);
+            serialPort1 = new ReliableSerialPort("COM7", 115200, Parity.None, 8, StopBits.One);
             serialPort1.DataReceived += SerialPort1_DataReceived;
             serialPort1.Open();
 
@@ -46,10 +46,11 @@ namespace Interfacerobot
             timerAffichage.Start();
             m_KeyboardHookManager = new KeyboardHookListener(new GlobalHooker());
             m_KeyboardHookManager.Enabled = true;
-            m_KeyboardHookManager.KeyDown += HookManager_KeyDown;    
+            m_KeyboardHookManager.KeyDown += HookManager_KeyDown;
+
         }
 
-        
+
 
         private void TimerAffichage_Tick(object sender, EventArgs e)
         {
@@ -73,7 +74,8 @@ namespace Interfacerobot
             //robot.ReceivedText += Encoding.UTF8.GetString(e.Data, 0, e.Data.Length);
             for (int i = 0; i < e.Data.Length; i++)
             {
-                robot.byteListReceived.Enqueue(e.Data[i]);
+                DecodeMessage(e.Data[i]);
+                //robot.byteListReceived.Enqueue(e.Data[i]);
             }
         }
 
@@ -228,19 +230,17 @@ namespace Interfacerobot
                     calculatedChecksum = CalculateChecksum(msgDecodedFunction, msgDecodedPayloadLength, msgDecodedPayload);
                     if (calculatedChecksum == receivedChecksum)
                     {
-                        CheckBoxMessage.IsChecked = true;//Success, on a un message valide
-                        CheckBoxMessage.Background = Brushes.Green;
-                        CheckBoxMessage.Foreground = Brushes.Green;
-                        CheckBoxMessage.Content = " Message Correct";
-                        ProcessDecodedMessage(msgDecodedFunction, msgDecodedPayloadLength, msgDecodedPayload);
+                        Dispatcher.Invoke(
+                            delegate
+                            {
+                                ProcessDecodedMessage(msgDecodedFunction, msgDecodedPayloadLength, msgDecodedPayload);
+                            });
                     }
                     else
                     {
-                        CheckBoxMessage.IsChecked = false;
-                        CheckBoxMessage.Background = Brushes.Red;
-                        CheckBoxMessage.Foreground = Brushes.Red;
-                        CheckBoxMessage.Content = " /!\\ Message Corrompu";
-                        TextBoxReception.Text += "\n\r/!\\ Attention, message corrompu. fonctions: " + "0x" + msgDecodedFunction.ToString("X4");
+                        Dispatcher.Invoke(
+                            delegate {TextBoxReception.Text += "\n\r/!\\ Attention, message corrompu. fonctions: " + "0x" + msgDecodedFunction.ToString("X4");}
+                            );
                     }
                     rcvState = StateReception.Waiting;
                     break;
@@ -332,9 +332,9 @@ namespace Interfacerobot
                     robot.vLinéaireOdo = tab.GetFloat();
                     tab = msgPayload.GetRange(20, 4);
                     robot.vAngulaireOdo = tab.GetFloat();
-                    textBoxPosition.Text = "Pos X: " + (robot.positionXOdo).ToString() + "\n\r";
-                    textBoxPosition.Text += "Pos Y: " + (robot.positionYOdo).ToString() + "\n\r";
-                    textBoxPosition.Text += "Angle en ° : " + (robot.AngleRadOdo*(180d/Math.PI)).ToString() + "\n\r";
+                    textBoxPosition.Text = "Pos X: " + (robot.positionXOdo).ToString("F4") + "\n\r";
+                    textBoxPosition.Text += "Pos Y: " + (robot.positionYOdo).ToString("F4") + "\n\r";
+                    textBoxPosition.Text += "Angle en ° : " + (robot.AngleRadOdo*(180d/Math.PI)).ToString("F4") + "\n\r";
                     textBoxPosition.Text += "Vitesse linéaire en m.s-1 : " + robot.vLinéaireOdo.ToString() + "\n\r";
                     textBoxPosition.Text += "Vitesse Angulaire en rad.s-1 : " + robot.vAngulaireOdo.ToString();
                     
@@ -349,6 +349,10 @@ namespace Interfacerobot
                     double CorrectKiAng;
                     double KdAng;
                     double CorrectKdAng;
+                    double vAngCons;
+                    double CorrectKpAngMax;
+                    double CorrectKiAngMax;
+                    double CorrectKdAngMax;
 
                     double vLinError;
                     double vLinCommand;
@@ -358,6 +362,11 @@ namespace Interfacerobot
                     double CorrectKiLin;
                     double KdLin;
                     double CorrectKdLin;
+                    double vLinCons;
+                    double CorrectKpLinMax;
+                    double CorrectKiLinMax;
+                    double CorrectKdLinMax;
+
 
                     byte[] tabPID = msgPayload.GetRange(0, 4);
                     vAngError = tabPID.GetFloat();
@@ -393,13 +402,33 @@ namespace Interfacerobot
                     tabPID = msgPayload.GetRange(60, 4);
                     CorrectKdLin = tabPID.GetFloat();
 
-                    //asservissement.UpdatePolarSpeedConsigneValues();
-                    asservissement.UpdatePolarSpeedCommandValues(vLinCommand, vAngCommand);
-                    asservissement.UpdatePolarOdometrySpeed(robot.vLinéaireOdo, robot.vAngulaireOdo);
-                    asservissement.UpdatePolarSpeedErrorValues(vLinError, vAngError);
-                    asservissement.UpdatePolarSpeedCorrectionGains(KpLin, KpAng, KiLin, KiAng, KdLin, KdAng);
-                    asservissement.UpdatePolarSpeedCorrectionValues(CorrectKpLin, CorrectKpAng, CorrectKiLin, CorrectKiAng, CorrectKdLin, CorrectKdAng);
+                    tabPID = msgPayload.GetRange(64, 4);
+                    vAngCons = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(68, 4);
+                    vLinCons = tabPID.GetFloat();
 
+                    tabPID = msgPayload.GetRange(72, 4);
+                    CorrectKpAngMax = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(76, 4);
+                    CorrectKiAngMax = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(80, 4);
+                    CorrectKdAngMax = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(84, 4);
+                    CorrectKpLinMax = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(88, 4);
+                    CorrectKiLinMax = tabPID.GetFloat();
+                    tabPID = msgPayload.GetRange(92, 4);
+                    CorrectKdLinMax = tabPID.GetFloat();
+
+                    AsservDisplay.UpdatePolarSpeedConsigneValues(vLinCons, vAngCons);
+                    AsservDisplay.UpdatePolarSpeedCommandValues(vLinCommand, vAngCommand);
+                    AsservDisplay.UpdatePolarOdometrySpeed(robot.vLinéaireOdo, robot.vAngulaireOdo);
+                    AsservDisplay.UpdatePolarSpeedErrorValues(vLinError, vAngError);
+                    AsservDisplay.UpdatePolarSpeedCorrectionGains(KpLin, KpAng, KiLin, KiAng, KdLin, KdAng);
+                    AsservDisplay.UpdatePolarSpeedCorrectionValues(CorrectKpLin, CorrectKpAng, CorrectKiLin, CorrectKiAng, CorrectKdLin, CorrectKdAng);
+                    AsservDisplay.UpdatePolarSpeedCorrectionLimits(CorrectKpLinMax, CorrectKiLinMax, CorrectKdLinMax, CorrectKpAngMax, CorrectKiAngMax, CorrectKdAngMax);
+
+                    AsservDisplay.UpdateDisplay();
                     break;
             }
         }
@@ -447,9 +476,9 @@ namespace Interfacerobot
                     //    BoxClavier.Background = imageBrush;
                     //    break;
 
-
+                    
                     case Keys.Up:
-                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(0.3), 0});
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(0.3), 0 });
                         break;
 
                     case Keys.Down:
@@ -465,7 +494,7 @@ namespace Interfacerobot
                         break;
                 }
             }
-        }
+            }
 
         #endregion
 

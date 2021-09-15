@@ -4,23 +4,23 @@
 void SetUpPiAsservissementVitesseAngulaire() {
     //Reglage de Ziegler Nichols sans depassements : un tout petit peu mou
     //Implémente un correcteur PI   
-    robotState.KpAngulaire = 0; 
-    robotState.KiAngulaire = 0; 
-    robotState.KdAngulaire = 0;
+    robotState.KpAngulaire = 1; 
+    robotState.KiAngulaire = 2;
+    robotState.KdAngulaire = 3;
 
-    robotState.KpAngulaireMax = 10;
-    robotState.KiAngulaireMax = 10;
-    robotState.KdAngulaireMax = 10;
+    robotState.KpAngulaireMax = 4;
+    robotState.KiAngulaireMax = 5;
+    robotState.KdAngulaireMax = 6;
 }
 
 void SetUpPiAsservissementVitesseLineaire() {
     //Reglage de Ziegler Nichols sans depassements : un tout petit peu mou
     //Implémente un correcteur PI
-    robotState.KpLineaire = 0; //8
-    robotState.KiLineaire = 0; //112
-    robotState.KdLineaire = 0;
+    robotState.KpLineaire = 1.1; //8
+    robotState.KiLineaire = 2.1; //112
+    robotState.KdLineaire = 3.1;
     
-    robotState.KpLineaireMax = 10;
-    robotState.KiLineaireMax = 10;
-    robotState.KdLineaireMax = 10;
+    robotState.KpLineaireMax = 4.1;
+    robotState.KiLineaireMax = 5.1;
+    robotState.KdLineaireMax = 6.1;
 }
