@@ -32,6 +32,7 @@ namespace Interfacerobot
         //AsservissementXYThetaControl asservissement = new AsservissementXYThetaControl();
         private readonly KeyboardHookListener m_KeyboardHookManager;
 
+
         int i;
         public MainWindow()
         {
@@ -39,7 +40,6 @@ namespace Interfacerobot
             serialPort1 = new ReliableSerialPort("COM7", 115200, Parity.None, 8, StopBits.One);
             serialPort1.DataReceived += SerialPort1_DataReceived;
             serialPort1.Open();
-
             timerAffichage = new DispatcherTimer();
             timerAffichage.Interval = new TimeSpan(0, 0, 0, 0, 100);
             timerAffichage.Tick += TimerAffichage_Tick;
@@ -47,6 +47,7 @@ namespace Interfacerobot
             m_KeyboardHookManager = new KeyboardHookListener(new GlobalHooker());
             m_KeyboardHookManager.Enabled = true;
             m_KeyboardHookManager.KeyDown += HookManager_KeyDown;
+            m_KeyboardHookManager.KeyUp += HookManager_KeyUp;
 
         }
 
@@ -105,38 +106,38 @@ namespace Interfacerobot
             telemetres = 0x0030,
             moteurs = 0x0040,
             message = 0x0080,
-            RobotState=0x0050,
-            Clavier=0x0053,
-            Position=0x0061,
-            PID=0x0062
+            RobotState = 0x0050,
+            Clavier = 0x0053,
+            Position = 0x0061,
+            PID = 0x0062
         }
 
         public enum StateRobot
         {
-            STATE_ATTENTE=0,
-            STATE_ATTENTE_EN_COURS=1,
-            STATE_AVANCE=2,
-            STATE_AVANCE_EN_COURS=3,
-            STATE_TOURNE_GAUCHE=4,
-            STATE_TOURNE_GAUCHE_EN_COURS=5,
-            STATE_TOURNE_DROITE=6,
-            STATE_TOURNE_DROITE_EN_COURS=7,
-            STATE_TOURNE_SUR_PLACE_GAUCHE=8,
-            STATE_TOURNE_SUR_PLACE_GAUCHE_EN_COURS=9,
-            STATE_TOURNE_SUR_PLACE_DROITE=10,
-            STATE_TOURNE_SUR_PLACE_DROITE_EN_COURS=11,
-            STATE_ARRET=12,
-            STATE_ARRET_EN_COURS=13,
-            STATE_RECULE=14,
-            STATE_RECULE_EN_COURS=15,
-            STATE_TOURNE_GAUCHE_DOUX =16,
-            STATE_TOURNE_GAUCHE_DOUX_EN_COURS= 17,
-            STATE_TOURNE_DROITE_DOUX=19,
-            STATE_TOURNE_DROITE_DOUX_EN_COURS=18 ,
-            STATE_DROITE_TUNNEL =20,
-            STATE_DROITE_TUNNEL_EN_COURS= 21,
-            STATE_GAUCHE_TUNNEL= 22,
-            STATE_GAUCHE_TUNNEL_EN_COURS= 23,
+            STATE_ATTENTE = 0,
+            STATE_ATTENTE_EN_COURS = 1,
+            STATE_AVANCE = 2,
+            STATE_AVANCE_EN_COURS = 3,
+            STATE_TOURNE_GAUCHE = 4,
+            STATE_TOURNE_GAUCHE_EN_COURS = 5,
+            STATE_TOURNE_DROITE = 6,
+            STATE_TOURNE_DROITE_EN_COURS = 7,
+            STATE_TOURNE_SUR_PLACE_GAUCHE = 8,
+            STATE_TOURNE_SUR_PLACE_GAUCHE_EN_COURS = 9,
+            STATE_TOURNE_SUR_PLACE_DROITE = 10,
+            STATE_TOURNE_SUR_PLACE_DROITE_EN_COURS = 11,
+            STATE_ARRET = 12,
+            STATE_ARRET_EN_COURS = 13,
+            STATE_RECULE = 14,
+            STATE_RECULE_EN_COURS = 15,
+            STATE_TOURNE_GAUCHE_DOUX = 16,
+            STATE_TOURNE_GAUCHE_DOUX_EN_COURS = 17,
+            STATE_TOURNE_DROITE_DOUX = 19,
+            STATE_TOURNE_DROITE_DOUX_EN_COURS = 18,
+            STATE_DROITE_TUNNEL = 20,
+            STATE_DROITE_TUNNEL_EN_COURS = 21,
+            STATE_GAUCHE_TUNNEL = 22,
+            STATE_GAUCHE_TUNNEL_EN_COURS = 23,
         }
 
         byte CalculateChecksum(int msgFunction, int msgPayloadLength, byte[] msgPayload)
@@ -239,7 +240,7 @@ namespace Interfacerobot
                     else
                     {
                         Dispatcher.Invoke(
-                            delegate {TextBoxReception.Text += "\n\r/!\\ Attention, message corrompu. fonctions: " + "0x" + msgDecodedFunction.ToString("X4");}
+                            delegate { TextBoxReception.Text += "\n\r/!\\ Attention, message corrompu. fonctions: " + "0x" + msgDecodedFunction.ToString("X4"); }
                             );
                     }
                     rcvState = StateReception.Waiting;
@@ -255,7 +256,7 @@ namespace Interfacerobot
         {
             int numLed, etatLed, IRGauche, IRCentre, IRDroite, MG, MD;
 
-            switch((Functions)msgFunction)
+            switch ((Functions)msgFunction)
             {
                 case Functions.LEDS:
                     numLed = msgPayload[0];
@@ -293,33 +294,33 @@ namespace Interfacerobot
                             CheckBoxLed3.IsChecked = false;
                         }
                     }
-                break;
+                    break;
 
                 case Functions.telemetres:
                     IRDroite = msgPayload[0];
                     IRCentre = msgPayload[1];
                     IRGauche = msgPayload[2];
                     TextBoxTelemetres.Text = "IR Gauche:" + IRGauche.ToString() + "cm\n\r" + "IR Centre:" + IRCentre.ToString() + "cm\n\r" + "IR Droite:" + IRDroite.ToString() + "cm";
-                break;
+                    break;
 
                 case Functions.moteurs:
                     MG = msgPayload[0];
                     MD = msgPayload[1];
                     TextBoxMoteurs.Text = "Vitesse Gauche:" + MG.ToString() + "%\n\r" + "Vitesse Droite:" + MD.ToString() + "%\n\r";
-                break;
+                    break;
 
                 case Functions.message:
                     TextBoxReception.Text += Encoding.UTF8.GetString(msgPayload, 0, msgPayload.Length) + "\n";
-                break;
+                    break;
 
                 case Functions.RobotState:
                     int instant = (((int)msgPayload[1]) << 24) + (((int)msgPayload[2]) << 16) + (((int)msgPayload[3]) << 8) + (((int)msgPayload[4]));
                     RtbReception.Text = ((StateRobot)(msgPayload[0])).ToString() + "\n\rTemps: " + instant.ToString() + " ms";
-                break;
+                    break;
 
                 case Functions.Clavier:
-                    textBoxPilotage.Text = "Instruction reçue: " + ((StateRobot)msgPayload[0]).ToString() ;
-                break;
+                    textBoxPilotage.Text = "Instruction reçue: " + ((StateRobot)msgPayload[0]).ToString();
+                    break;
 
                 case Functions.Position:
                     byte[] tab = msgPayload.GetRange(4, 4);
@@ -334,10 +335,10 @@ namespace Interfacerobot
                     robot.vAngulaireOdo = tab.GetFloat();
                     textBoxPosition.Text = "Pos X: " + (robot.positionXOdo).ToString("F4") + "\n\r";
                     textBoxPosition.Text += "Pos Y: " + (robot.positionYOdo).ToString("F4") + "\n\r";
-                    textBoxPosition.Text += "Angle en ° : " + (robot.AngleRadOdo*(180d/Math.PI)).ToString("F4") + "\n\r";
-                    textBoxPosition.Text += "Vitesse linéaire en m.s-1 : " + robot.vLinéaireOdo.ToString() + "\n\r";
-                    textBoxPosition.Text += "Vitesse Angulaire en rad.s-1 : " + robot.vAngulaireOdo.ToString();
-                    
+                    textBoxPosition.Text += "Angle en ° : " + (robot.AngleRadOdo * (180d / Math.PI)).ToString("F4") + "\n\r";
+                    textBoxPosition.Text += "Vitesse linéaire en m.s-1 : " + robot.vLinéaireOdo.ToString("F6") + "\n\r";
+                    textBoxPosition.Text += "Vitesse Angulaire en rad.s-1 : " + robot.vAngulaireOdo.ToString("F6");
+
                     break;
 
                 case Functions.PID:
@@ -421,7 +422,7 @@ namespace Interfacerobot
                     CorrectKdLinMax = tabPID.GetFloat();
 
                     AsservDisplay.UpdatePolarSpeedConsigneValues(vLinCons, vAngCons);
-                    AsservDisplay.UpdatePolarSpeedCommandValues(vLinCommand, vAngCommand);
+                    AsservDisplay.UpdatePolarSpeedCommandValues(vLinCommand, vAngCommand * 0.218);
                     AsservDisplay.UpdatePolarOdometrySpeed(robot.vLinéaireOdo, robot.vAngulaireOdo);
                     AsservDisplay.UpdatePolarSpeedErrorValues(vLinError, vAngError);
                     AsservDisplay.UpdatePolarSpeedCorrectionGains(KpLin, KpAng, KiLin, KiAng, KdLin, KdAng);
@@ -436,70 +437,58 @@ namespace Interfacerobot
         bool autoControlActivated = false;
         private void HookManager_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-            var imageBrush = new ImageBrush();
             if (autoControlActivated == true)
             {
                 switch (e.KeyCode)
                 {
+                    case Keys.Up:
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 4, 0 });
+                        break;
+
+                    //case Keys.Down:
+                    //    UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(-0.3), 0 });
+                    //    break;
+
                     //case Keys.Left:
-                    //    UartEncodeAndSendMessage(0x0051, 1, new byte[] { (byte)StateRobot.STATE_TOURNE_SUR_PLACE_GAUCHE });
-                    //    //TextBoxReception.Text = "Left\n\r";
-                    //    imageBrush.ImageSource = new BitmapImage(new Uri("keyboard_key_left.png", UriKind.Relative));
-                    //    BoxClavier.Background = imageBrush;
+                    //    UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(0.2), Convert.ToByte(0.2) });
                     //    break;
 
                     //case Keys.Right:
-                    //    UartEncodeAndSendMessage(0x0051, 1, new byte[] { (byte)StateRobot.STATE_TOURNE_SUR_PLACE_DROITE });
-                    //    //TextBoxReception.Text = "Right\n\r";
-                    //    imageBrush.ImageSource = new BitmapImage(new Uri("keyboard_key_right.png", UriKind.Relative));
-                    //    BoxClavier.Background = imageBrush;
+                    //    UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(0.2), Convert.ToByte(-0.2) });
                     //    break;
-
-                    //case Keys.Up:
-                    //    UartEncodeAndSendMessage(0x0051, 1, new byte[] { (byte)StateRobot.STATE_AVANCE });
-                    //    //TextBoxReception.Text = "up\n\r";
-                    //    imageBrush.ImageSource = new BitmapImage(new Uri("keyboard_key_up.png", UriKind.Relative));
-                    //    BoxClavier.Background = imageBrush;
-                    //    break;
-
-                    //case Keys.Down:
-                    //    UartEncodeAndSendMessage(0x0051, 1, new byte[] { (byte)StateRobot.STATE_RECULE });
-                    //    //TextBoxReception.Text = "down\n\r";
-                    //    imageBrush.ImageSource = new BitmapImage(new Uri("keyboard_key_down.png", UriKind.Relative));
-                    //    BoxClavier.Background = imageBrush;
-                    //    break;
-
-                    //case Keys.PageDown:
-                    //    UartEncodeAndSendMessage(0x0051, 1, new byte[] { (byte)StateRobot.STATE_ARRET });
-                    //    //TextBoxReception.Text = "Pagedown\n\r";
-                    //    imageBrush.ImageSource = new BitmapImage(new Uri("keyboard_key_page_down.png", UriKind.Relative));
-                    //    BoxClavier.Background = imageBrush;
-                    //    break;
-
-                    
-                    case Keys.Up:
-                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(0.3), 0 });
-                        break;
-
-                    case Keys.Down:
-                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(-0.3), 0 });
-                        break;
-
-                    case Keys.Left:
-                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(0.2), Convert.ToByte(0.2) });
-                        break;
-
-                    case Keys.Right:
-                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(0.2), Convert.ToByte(-0.2) });
-                        break;
                 }
             }
+        }
+
+        private void HookManager_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (autoControlActivated == true)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.Up:
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0, 0 });
+                        break;
+
+                    //case Keys.Down:
+                    //    UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(-0.3), 0 });
+                    //    break;
+
+                    //case Keys.Left:
+                    //    UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(0.2), Convert.ToByte(0.2) });
+                    //    break;
+
+                    //case Keys.Right:
+                    //    UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(0.2), Convert.ToByte(-0.2) });
+                    //    break;
+                }
             }
+        }
 
         #endregion
 
         #region Boutons 
-        private void textBox_TextChanged(object sender, TextChangedEventArgs e) 
+        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
@@ -514,7 +503,7 @@ namespace Interfacerobot
 
         private void sendMessage()
         {
-            
+
             //TextBoxReception.Text = TextBoxReception.Text + "Message reçu: " + TextBoxEmission.Text + "\r\n";
             //TextBoxEmission.Text = "";
             serialPort1.Write(TextBoxEmission.Text);
@@ -525,14 +514,14 @@ namespace Interfacerobot
         {
             byte[] message = Encoding.ASCII.GetBytes("Bonjour");
 
-           // ProcessDecodedMessage(0x0020, 2, new byte[] { 3,1 });
-           UartEncodeAndSendMessage(0x0020, 2, new byte[] { 3, 1 });   //led 3 true
-           UartEncodeAndSendMessage(0x0030, 3, new byte[] { 25, 30, 25 });  //IR 25cm 30cm 25cm
-           UartEncodeAndSendMessage(0x0040, 2, new byte[] { 41, 38 });  // Moteur1 41% Moteur2 38%
-           //UartEncodeAndSendMessage(0x0080, 7, message);
-           UartEncodeAndSendMessage(0x0020, 2, new byte[] { 1, 1 });   //led 1 true
-           UartEncodeAndSendMessage(0x0020, 2, new byte[] { 2, 1 });   //led 2 true        
-           // UartEncodeAndSendMessage(0x0080, (UInt16)message.Length, message);
+            // ProcessDecodedMessage(0x0020, 2, new byte[] { 3,1 });
+            UartEncodeAndSendMessage(0x0020, 2, new byte[] { 3, 1 });   //led 3 true
+            UartEncodeAndSendMessage(0x0030, 3, new byte[] { 25, 30, 25 });  //IR 25cm 30cm 25cm
+            UartEncodeAndSendMessage(0x0040, 2, new byte[] { 41, 38 });  // Moteur1 41% Moteur2 38%
+                                                                         //UartEncodeAndSendMessage(0x0080, 7, message);
+            UartEncodeAndSendMessage(0x0020, 2, new byte[] { 1, 1 });   //led 1 true
+            UartEncodeAndSendMessage(0x0020, 2, new byte[] { 2, 1 });   //led 2 true        
+                                                                        // UartEncodeAndSendMessage(0x0080, (UInt16)message.Length, message);
             UartEncodeAndSendMessage(0x0053, 1, new byte[] { 4 });
             UartEncodeAndSendMessage(0x0050, 5, new byte[] { 2, 0, 0, 0, 10 });
             UartEncodeAndSendMessage(0x0061, 5, new byte[] { 0, 0, 0, 0, 0 });
@@ -553,7 +542,7 @@ namespace Interfacerobot
         bool cpt = true;
         private void buttonControl_Click(object sender, RoutedEventArgs e)
         {
-            
+
             if (!cpt)
             {
                 buttonControl.Background = Brushes.White;
@@ -562,7 +551,7 @@ namespace Interfacerobot
                 cpt = true;
                 BoxClavier.Visibility = Visibility.Hidden;
                 BoxClavier.Background = Brushes.Black;
-                UartEncodeAndSendMessage(0x0052, 1, new byte[] {1});
+                UartEncodeAndSendMessage(0x0052, 1, new byte[] { 1 });
             }
             else
             {
@@ -571,13 +560,14 @@ namespace Interfacerobot
                 autoControlActivated = true;
                 cpt = false;
                 BoxClavier.Visibility = Visibility.Visible;
-                UartEncodeAndSendMessage(0x0052, 1, new byte[] {0});
+                UartEncodeAndSendMessage(0x0052, 1, new byte[] { 0 });
             }
         }
         private void buttonReset_Click(object sender, RoutedEventArgs e)
         {
-            UartEncodeAndSendMessage(0x0062,1, new byte[] {0});
+            UartEncodeAndSendMessage(0x0062, 1, new byte[] { 0 });
         }
+
 
         #endregion
 

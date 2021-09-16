@@ -12,7 +12,7 @@ void PWMSetSpeedConsigne(float vitesseEnpourcents, int moteur);
 void PWMSetSpeedConsignePolaire();
 void SendPIDData(void);
 
-#define COEFF_VITESSE_LINEAIRE_PERCENT 60
-#define COEFF_VITESSE_ANGULAIRE_PERCENT 31.
+#define COEFF_VITESSE_LINEAIRE_PERCENT 68.5
+#define COEFF_VITESSE_ANGULAIRE_PERCENT 74.5
 
 #endif /* PWM_H */

@@ -16,6 +16,7 @@
 #include "UART_Protocol.h"
 #include "QEI.h"
 #include "Asservissement.h"
+#include "Utilities.h"
 
 #define STATE_ATTENTE 0
 #define STATE_ATTENTE_EN_COURS 1
@@ -72,8 +73,8 @@ int main(void) {
     SetUpPiAsservissementVitesseAngulaire();
     SetUpPiAsservissementVitesseLineaire();
     
-    robotState.vitesseAngulaireConsigne = 0; //en rad.s-1
-    robotState.vitesseLineaireConsigne = 0.4; // en m.s-1
+    robotState.vitesseAngulaireConsigne = PI/2; //en rad.s-1
+    robotState.vitesseLineaireConsigne = 0; // en m.s-1
 
     //   PWMSetSpeedConsigne(-20, MOTEUR_DROIT);
     
@@ -328,7 +329,8 @@ void SendRobotState(void) {
     UartEncodeAndSendMessage(0x0050, 5, RobotState);
 }
 
-void SetRobotSpeed(float linear, float angular) {
-    robotState.vitesseAngulaireConsigne = angular;
-    robotState.vitesseLineaireConsigne = linear;
+void SetRobotSpeed(float linear, float angular) 
+{
+    robotState.vitesseLineaireConsigne = linear/10;
+    robotState.vitesseAngulaireConsigne = angular/10;
 }
