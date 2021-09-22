@@ -1,6 +1,7 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 //float acceleration = 5;
+#include "Asservissement.h"
 
 typedef struct robotStateBITS {
 
@@ -59,7 +60,10 @@ typedef struct robotStateBITS {
             double CorrectionAngulaireKp;
             double CorrectionAngulaireKi;
             double CorrectionAngulaireKd;
-
+            
+            PidCorrector PidX, PidTheta;
+            double xCorrectionVitessePourcent;
+            double thetaCorrectionVitessePorcent;
         }
         ;
     }

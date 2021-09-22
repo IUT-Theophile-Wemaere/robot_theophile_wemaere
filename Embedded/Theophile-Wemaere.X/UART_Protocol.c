@@ -5,6 +5,7 @@
 #include "UART.h"
 #include "main.h"
 #include "toolbox.h"
+#include "Asservissement.h"
 
 int msgDecodedFunction = 0;
 int msgDecodedPayloadLength = 0;
@@ -24,127 +25,116 @@ typedef enum {
 
 StateReception rcvState = Waiting;
 
-
-unsigned char UartCalculateChecksum(int msgFunction,int msgPayloadLength, unsigned char* msgPayload)
-{
+unsigned char UartCalculateChecksum(int msgFunction, int msgPayloadLength, unsigned char* msgPayload) {
     int i;
-    unsigned char  checksum = 0xFE;
-    checksum ^= msgFunction>>8;
-    checksum ^= msgFunction>>0;
-    checksum ^= msgPayloadLength>>8;
-    checksum ^= msgPayloadLength>>0;
-    for (i = 0 ; i < msgPayloadLength; i++)
-    {
+    unsigned char checksum = 0xFE;
+    checksum ^= msgFunction >> 8;
+    checksum ^= msgFunction >> 0;
+    checksum ^= msgPayloadLength >> 8;
+    checksum ^= msgPayloadLength >> 0;
+    for (i = 0; i < msgPayloadLength; i++) {
         checksum ^= msgPayload[i];
     }
     return checksum;
 }
 
-void UartEncodeAndSendMessage(int msgFunction,int msgPayloadLength, unsigned char* msgPayload)
-{
-    int pos=0,i;
-    unsigned char trame[6+msgPayloadLength];
-    trame[pos++]=0xFE;
-    trame[pos++]= msgFunction>>8;
-    trame[pos++]= msgFunction>>0;
-    trame[pos++]= msgPayloadLength>>8;
-    trame[pos++]=msgPayloadLength>>0;
-    for(i=0;i<msgPayloadLength;i++)
-    {
-        trame[pos++]=msgPayload[i];
+void UartEncodeAndSendMessage(int msgFunction, int msgPayloadLength, unsigned char* msgPayload) {
+    int pos = 0, i;
+    unsigned char trame[6 + msgPayloadLength];
+    trame[pos++] = 0xFE;
+    trame[pos++] = msgFunction >> 8;
+    trame[pos++] = msgFunction >> 0;
+    trame[pos++] = msgPayloadLength >> 8;
+    trame[pos++] = msgPayloadLength >> 0;
+    for (i = 0; i < msgPayloadLength; i++) {
+        trame[pos++] = msgPayload[i];
     }
-    trame[pos++]= UartCalculateChecksum(msgFunction, msgPayloadLength, msgPayload);
-    SendMessage(trame,pos);
-           
+    trame[pos++] = UartCalculateChecksum(msgFunction, msgPayloadLength, msgPayload);
+    SendMessage(trame, pos);
+
 }
 
-void UartDecodeMessage(unsigned char c)
-{
-    switch (rcvState)
-    {
+void UartDecodeMessage(unsigned char c) {
+    switch (rcvState) {
         case Waiting:
-            if (c == 0xFE)
-            {
+            if (c == 0xFE) {
                 rcvState = FunctionMSB;
             }
             msgDecodedFunction = 0;
             msgDecodedPayloadIndex = 0;
             msgDecodedPayloadLength = 0;
-        break;
+            break;
 
         case FunctionMSB:
-            msgDecodedFunction = (unsigned char)(c << 8);
+            msgDecodedFunction = (unsigned char) (c << 8);
             rcvState = FunctionLSB;
-        break;
+            break;
 
         case FunctionLSB:
-            msgDecodedFunction += (unsigned char)(c << 0);
+            msgDecodedFunction += (unsigned char) (c << 0);
             rcvState = PayloadLengthMSB;
-        break;
+            break;
 
         case PayloadLengthMSB:
-            msgDecodedPayloadLength = (unsigned char)(c << 8);
+            msgDecodedPayloadLength = (unsigned char) (c << 8);
             rcvState = PayloadLengthLSB;
-        break;
+            break;
 
         case PayloadLengthLSB:
-            msgDecodedPayloadLength += (unsigned char)(c << 0);
-            if(msgDecodedPayloadLength != 0)
-            {
+            msgDecodedPayloadLength += (unsigned char) (c << 0);
+            if (msgDecodedPayloadLength != 0) {
                 msgDecodedPayloadIndex = 0;
                 rcvState = Payload;
-            }
-            else 
-            {
+            } else {
                 rcvState = CheckSum;
             }
-        break;
+            break;
 
         case Payload:
             msgDecodedPayload[msgDecodedPayloadIndex] = c;
             msgDecodedPayloadIndex++;
-            if(msgDecodedPayloadIndex >= msgDecodedPayloadLength)
-            {
+            if (msgDecodedPayloadIndex >= msgDecodedPayloadLength) {
                 rcvState = CheckSum;
             }
-        break;
+            break;
 
-        case CheckSum: ;
+        case CheckSum:;
             unsigned char receivedChecksum = c;
-            unsigned char calculatedChecksum = UartCalculateChecksum( msgDecodedFunction, msgDecodedPayloadLength, msgDecodedPayload);
-            if (calculatedChecksum == receivedChecksum)
-            {
+            unsigned char calculatedChecksum = UartCalculateChecksum(msgDecodedFunction, msgDecodedPayloadLength, msgDecodedPayload);
+            if (calculatedChecksum == receivedChecksum) {
                 UartProcessDecodedMessage(msgDecodedFunction, msgDecodedPayloadLength, msgDecodedPayload);
             }
             rcvState = Waiting;
-        break;
+            break;
 
         default:
             rcvState = Waiting;
-        break;
+            break;
     }
 }
 
-void UartProcessDecodedMessage(unsigned char function,unsigned char payloadLength, unsigned char * payload)
-{
-    switch(function)
-    {
-        case SET_ROBOT_STATE: 
+void UartProcessDecodedMessage(unsigned char function, unsigned char payloadLength, unsigned char * payload) {
+    switch (function) {
+        case SET_ROBOT_STATE:
             SetRobotState(payload[0]);
-            UartEncodeAndSendMessage(0x0053,1, payload);
+            UartEncodeAndSendMessage(0x0053, 1, payload);
             break;
-        
+
         case SET_ROBOT_MANUAL_CONTROL:
             SetRobotAutoControlState(payload[0]);
-        break;
-        
+            break;
+
         case RESET_ODO:
-            reset=1;
-        break;
-        
+            reset = 1;
+            break;
+
         case SET_SPEED:
-            SetRobotSpeed(payload[0],payload[1]);
-        break;
+            SetRobotSpeed(payload[0], payload[1]);
+            break;
+
+        case SET_PID:
+            SetupPidAssservissement(payload[0], payload[1], payload[2], payload[3], payload[4], payload[5], payload[6]);
+            break;
     }
 }
 

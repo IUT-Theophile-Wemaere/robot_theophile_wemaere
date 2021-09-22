@@ -5,6 +5,7 @@
 #define SET_ROBOT_MANUAL_CONTROL 0x0052
 #define RESET_ODO 0x0062
 #define SET_SPEED 0x0053
+#define SET_PID 0x0064
 unsigned char UartCalculateChecksum(int msgFunction,int msgPayloadLength, unsigned char* msgPayload);
 void UartEncodeAndSendMessage(int msgFunction,int msgPayloadLength, unsigned char* msgPayload);
 void UartDecodeMessage(unsigned char c);

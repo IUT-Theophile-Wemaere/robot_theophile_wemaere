@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:WpfAsservDisplay="clr-namespace:WpfAsservissementDisplay;assembly=WpfAsservissementDisplay"
+        xmlns:oscillo="clr-namespace:WpfOscilloscopeControl;assembly=WpfOscilloscopeControl"
         xmlns:local="clr-namespace:Interfacerobot"
         mc:Ignorable="d"
-        Title="MainWindow" Height="773" Width="800" Background="White">
+        Title="MainWindow" Height="759.5" Width="800" Background="White">
     <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -23,10 +24,15 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
+
+
         <WpfAsservDisplay:AsservissementXYThetaControl x:Name="AsservDisplay" Grid.Row="4" Grid.Column="3"   VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="2" Margin="0,12,0,2" Background="Black" />
         <GroupBox x:Name="Reception" Header="Reception" Foreground="White" Margin="0" Background="Black" BorderBrush="Black" Grid.Column="3" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Disabled">
             <TextBox x:Name="TextBoxReception" Margin="0" TextWrapping="Wrap" Text="" TextChanged="textBox_TextChanged" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" IsReadOnly="True" />
         </GroupBox>
+
+        <oscillo:WpfOscilloscope x:Name="oscilloSpeed"/>
+
         <GroupBox x:Name="Emission" Header="Emission" Foreground="White" Margin="0" Background="black" BorderBrush="Black" Grid.Column="1" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Disabled">
             <TextBox x:Name="TextBoxEmission" Margin="0" TextWrapping="Wrap" Text="" TextChanged="textBox_TextChanged" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" AcceptsReturn="True" KeyUp="TextBoxEmission_KeyUp" />
         </GroupBox>
@@ -57,5 +63,33 @@
         <CheckBox x:Name="CheckBoxLed3" Content="Led 3"  Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="0,90,0,0" Grid.Row="3"/>
         <CheckBox x:Name="CheckBoxMessage" Content="Message Correct" Foreground="White" Grid.Column="3" HorizontalAlignment="Left" Margin="175,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>
 
+        <GroupBox x:Name="AsservReglage" Header="Réglage asservissement"  Foreground="White" Background="{x:Null}" Margin="13,206,112,0" Grid.Row="4" Grid.ColumnSpan="2">
+            <Grid Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="95" Margin="0,0,0,0" Grid.Row="4" VerticalAlignment="Top" Width="249">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.4*"/>
+                    <RowDefinition Height="0.4*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Border BorderBrush="White" BorderThickness="1" Grid.Row="0" Grid.ColumnSpan="3"/>
+                <Border BorderBrush="White" BorderThickness="1" Grid.Row="1" Grid.ColumnSpan="3"/>
+                <Border BorderBrush="White" BorderThickness="1" Grid.Column="0" Grid.RowSpan="2"/>
+                <Border BorderBrush="White" BorderThickness="1" Grid.Column="1" Grid.RowSpan="2"/>
+                <Border BorderBrush="White" BorderThickness="1" Grid.Column="3" Grid.RowSpan="2"/>
+                <TextBox x:Name="txtKp" Margin="25,15,10,10" Text="" Foreground="White" Grid.Column="0" Grid.Row="0" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <TextBox x:Name="txtKi" Margin="25,15,10,10" Text="" Foreground="White" Grid.Column="1" Grid.Row="0" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <TextBox x:Name="txtKd" Margin="25,15,10,10" Text="" Foreground="White" Grid.Column="2" Grid.Row="0" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <TextBox x:Name="txtKpMax" Margin="25,15,10,10" Text="" Foreground="White" Grid.Column="0" Grid.Row="1" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <TextBox x:Name="txtKiMax" Margin="25,15,10,10" Text="" Foreground="White" Grid.Column="1" Grid.Row="1" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <TextBox x:Name="txtKdMax" Margin="25,15,10,10" Text="" Foreground="White" Grid.Column="2" Grid.Row="1" Background="{x:Null}" BorderBrush="{x:Null}"/>
+
+            </Grid>
+        </GroupBox>
+        <Button x:Name="buttonSwitch" Content="Linear" Grid.Column="1" HorizontalAlignment="Left" Height="33" Margin="254,220,0,0" Grid.Row="4" VerticalAlignment="Top" Width="87" Click="buttonSwitch_Click"/>
+        <Button x:Name="buttonSendPID" Content="Send PID Data" Grid.Column="1" HorizontalAlignment="Left" Height="33" Margin="254,277,0,0" Grid.Row="4" VerticalAlignment="Top" Width="87" Click="buttonSendPID_Click"/>
+        
     </Grid>
 </Window>

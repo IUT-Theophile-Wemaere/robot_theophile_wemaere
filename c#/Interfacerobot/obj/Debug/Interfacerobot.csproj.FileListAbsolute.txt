@@ -64,3 +64,9 @@ C:\GitHub\robot_theophile_wemaere\c#\Interfacerobot\bin\Debug\ZeroFormatter.Inte
 C:\GitHub\robot_theophile_wemaere\c#\Interfacerobot\bin\Debug\Newtonsoft.Json.dll
 C:\GitHub\robot_theophile_wemaere\c#\Interfacerobot\bin\Debug\ICSharpCode.SharpZipLib.dll
 C:\GitHub\robot_theophile_wemaere\c#\Interfacerobot\bin\Debug\ICSharpCode.SharpZipLib.pdb
+C:\GitHub\robot_theophile_wemaere\c#\Interfacerobot\bin\Debug\WpfOscilloscopeControl.dll
+C:\GitHub\robot_theophile_wemaere\c#\Interfacerobot\bin\Debug\SciChart.Charting.dll
+C:\GitHub\robot_theophile_wemaere\c#\Interfacerobot\bin\Debug\SciChart.Core.dll
+C:\GitHub\robot_theophile_wemaere\c#\Interfacerobot\bin\Debug\SciChart.Drawing.dll
+C:\GitHub\robot_theophile_wemaere\c#\Interfacerobot\bin\Debug\SciChart.Data.dll
+C:\GitHub\robot_theophile_wemaere\c#\Interfacerobot\bin\Debug\WpfOscilloscopeControl.pdb

@@ -11,6 +11,7 @@ void PWMSetSpeedConsigne(float vitesseEnpourcents, int moteur);
 
 void PWMSetSpeedConsignePolaire();
 void SendPIDData(void);
+void UpdateAsservissemment();
 
 #define COEFF_VITESSE_LINEAIRE_PERCENT 68.5
 #define COEFF_VITESSE_ANGULAIRE_PERCENT 74.5

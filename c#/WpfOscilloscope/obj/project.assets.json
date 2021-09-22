@@ -1,0 +1,161 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETFramework,Version=v4.8": {
+      "SciChart/6.3.0.13476": {
+        "type": "package",
+        "compile": {
+          "lib/net452/SciChart.Charting.dll": {},
+          "lib/net452/SciChart.Core.dll": {},
+          "lib/net452/SciChart.Data.dll": {},
+          "lib/net452/SciChart.Drawing.dll": {}
+        },
+        "runtime": {
+          "lib/net452/SciChart.Charting.dll": {},
+          "lib/net452/SciChart.Core.dll": {},
+          "lib/net452/SciChart.Data.dll": {},
+          "lib/net452/SciChart.Drawing.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.8/win": {
+      "SciChart/6.3.0.13476": {
+        "type": "package",
+        "compile": {
+          "lib/net452/SciChart.Charting.dll": {},
+          "lib/net452/SciChart.Core.dll": {},
+          "lib/net452/SciChart.Data.dll": {},
+          "lib/net452/SciChart.Drawing.dll": {}
+        },
+        "runtime": {
+          "lib/net452/SciChart.Charting.dll": {},
+          "lib/net452/SciChart.Core.dll": {},
+          "lib/net452/SciChart.Data.dll": {},
+          "lib/net452/SciChart.Drawing.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.8/win-x64": {
+      "SciChart/6.3.0.13476": {
+        "type": "package",
+        "compile": {
+          "lib/net452/SciChart.Charting.dll": {},
+          "lib/net452/SciChart.Core.dll": {},
+          "lib/net452/SciChart.Data.dll": {},
+          "lib/net452/SciChart.Drawing.dll": {}
+        },
+        "runtime": {
+          "lib/net452/SciChart.Charting.dll": {},
+          "lib/net452/SciChart.Core.dll": {},
+          "lib/net452/SciChart.Data.dll": {},
+          "lib/net452/SciChart.Drawing.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.8/win-x86": {
+      "SciChart/6.3.0.13476": {
+        "type": "package",
+        "compile": {
+          "lib/net452/SciChart.Charting.dll": {},
+          "lib/net452/SciChart.Core.dll": {},
+          "lib/net452/SciChart.Data.dll": {},
+          "lib/net452/SciChart.Drawing.dll": {}
+        },
+        "runtime": {
+          "lib/net452/SciChart.Charting.dll": {},
+          "lib/net452/SciChart.Core.dll": {},
+          "lib/net452/SciChart.Data.dll": {},
+          "lib/net452/SciChart.Drawing.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SciChart/6.3.0.13476": {
+      "sha512": "jRVfSTF9ZttN/wmikYElCKwzHDISvHuzwFV9xgUwtLrBEsizV7NSp/JFqJ1g1GF+9AC6t47r4OOWNywHYjtgbA==",
+      "type": "package",
+      "path": "scichart/6.3.0.13476",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.txt",
+        "images/platform-app-icons_scichart-windows.png",
+        "lib/net452/SciChart.Charting.dll",
+        "lib/net452/SciChart.Charting.xml",
+        "lib/net452/SciChart.Core.dll",
+        "lib/net452/SciChart.Core.xml",
+        "lib/net452/SciChart.Data.dll",
+        "lib/net452/SciChart.Data.xml",
+        "lib/net452/SciChart.Drawing.dll",
+        "lib/net452/SciChart.Drawing.xml",
+        "lib/netcoreapp3.1/SciChart.Charting.dll",
+        "lib/netcoreapp3.1/SciChart.Charting.xml",
+        "lib/netcoreapp3.1/SciChart.Core.dll",
+        "lib/netcoreapp3.1/SciChart.Core.xml",
+        "lib/netcoreapp3.1/SciChart.Data.dll",
+        "lib/netcoreapp3.1/SciChart.Data.xml",
+        "lib/netcoreapp3.1/SciChart.Drawing.dll",
+        "lib/netcoreapp3.1/SciChart.Drawing.xml",
+        "scichart.6.3.0.13476.nupkg.sha512",
+        "scichart.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETFramework,Version=v4.8": [
+      "SciChart >= 6.3.0.13476"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\TP_EO_6\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\GitHub\\robot_theophile_wemaere\\c#\\WpfOscilloscope\\WpfOscilloscopeControl.csproj",
+      "projectName": "WpfOscilloscopeControl",
+      "projectPath": "C:\\GitHub\\robot_theophile_wemaere\\c#\\WpfOscilloscope\\WpfOscilloscopeControl.csproj",
+      "packagesPath": "C:\\Users\\TP_EO_6\\.nuget\\packages\\",
+      "outputPath": "C:\\GitHub\\robot_theophile_wemaere\\c#\\WpfOscilloscope\\obj\\",
+      "projectStyle": "PackageReference",
+      "skipContentFileWrite": true,
+      "configFilePaths": [
+        "C:\\Users\\TP_EO_6\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net48"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net48": {
+          "projectReferences": {}
+        }
+      }
+    },
+    "frameworks": {
+      "net48": {
+        "dependencies": {
+          "SciChart": {
+            "target": "Package",
+            "version": "[6.3.0.13476, )"
+          }
+        }
+      }
+    },
+    "runtimes": {
+      "win": {
+        "#import": []
+      },
+      "win-x64": {
+        "#import": []
+      },
+      "win-x86": {
+        "#import": []
+      }
+    }
+  }
+}

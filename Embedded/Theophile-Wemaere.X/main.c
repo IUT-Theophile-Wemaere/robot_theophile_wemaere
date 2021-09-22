@@ -69,12 +69,9 @@ int main(void) {
     InitUART();
     InitQEI1();
     InitQEI2();
-
-    SetUpPiAsservissementVitesseAngulaire();
-    SetUpPiAsservissementVitesseLineaire();
     
-    robotState.vitesseAngulaireConsigne = PI/2; //en rad.s-1
-    robotState.vitesseLineaireConsigne = 0; // en m.s-1
+//    robotState.vitesseAngulaireConsigne = PI/2; //en rad.s-1
+//    robotState.vitesseLineaireConsigne = 0; // en m.s-1
 
     //   PWMSetSpeedConsigne(-20, MOTEUR_DROIT);
     

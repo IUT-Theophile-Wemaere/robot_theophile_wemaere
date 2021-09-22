@@ -118,6 +118,10 @@
       <Project>{f0a887e9-d0a2-47e3-994a-94a0dcae8d4f}</Project>
       <Name>WpfAsservissementDisplay</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WpfOscilloscope\WpfOscilloscopeControl.csproj">
+      <Project>{88baa407-3fea-4f4b-bb41-5309ce48884e}</Project>
+      <Name>WpfOscilloscopeControl</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -109,7 +109,8 @@ namespace Interfacerobot
             RobotState = 0x0050,
             Clavier = 0x0053,
             Position = 0x0061,
-            PID = 0x0062
+            PID = 0x0062,
+            Set_PID = 0x0064
         }
 
         public enum StateRobot
@@ -445,17 +446,17 @@ namespace Interfacerobot
                         UartEncodeAndSendMessage(0x0053, 2, new byte[] { 4, 0 });
                         break;
 
-                    //case Keys.Down:
-                    //    UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(-0.3), 0 });
-                    //    break;
+                    case Keys.Down:
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(- 4), 0 }); ;
+                        break;
 
-                    //case Keys.Left:
-                    //    UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(0.2), Convert.ToByte(0.2) });
-                    //    break;
+                    case Keys.Left:
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0,Convert.ToByte(Math.PI/2) });
+                        break;
 
-                    //case Keys.Right:
-                    //    UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(0.2), Convert.ToByte(-0.2) });
-                    //    break;
+                    case Keys.Right:
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0,Convert.ToByte(Math.PI / 2) });
+                        break;
                 }
             }
         }
@@ -470,17 +471,17 @@ namespace Interfacerobot
                         UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0, 0 });
                         break;
 
-                    //case Keys.Down:
-                    //    UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(-0.3), 0 });
-                    //    break;
+                    case Keys.Down:
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0, 0 });
+                        break;
 
-                    //case Keys.Left:
-                    //    UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(0.2), Convert.ToByte(0.2) });
-                    //    break;
+                    case Keys.Left:
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0, 0 });
+                        break;
 
-                    //case Keys.Right:
-                    //    UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(0.2), Convert.ToByte(-0.2) });
-                    //    break;
+                    case Keys.Right:
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0, 0 });
+                        break;
                 }
             }
         }
@@ -568,9 +569,33 @@ namespace Interfacerobot
             UartEncodeAndSendMessage(0x0062, 1, new byte[] { 0 });
         }
 
+        public bool switchState=false;
+        private void buttonSwitch_Click(object sender, RoutedEventArgs e)
+        {
+            switchState = !switchState;
+            if(switchState==false)
+            {
+                buttonSwitch.Content = "Linear";
+            }
+            else
+            {
+                buttonSwitch.Content = "Angular";
+            }
+        }
+
+        private void buttonSendPID_Click(object sender, RoutedEventArgs e)
+        {
+            byte kp, ki, kd, kpMax, kiMax, kdMax;
+            kp = Convert.ToByte(txtKp.Text);
+            ki = Convert.ToByte(txtKi.Text);
+            kd = Convert.ToByte(txtKd.Text);
+            kpMax = Convert.ToByte(txtKpMax.Text);
+            kiMax = Convert.ToByte(txtKiMax.Text);
+            kdMax = Convert.ToByte(txtKdMax.Text);
+            UartEncodeAndSendMessage(0x0064, 6, new byte[] { Convert.ToByte(switchState), kp, ki, kd, kpMax, kiMax, kdMax });
+        }
 
         #endregion
-
     }
 }
 

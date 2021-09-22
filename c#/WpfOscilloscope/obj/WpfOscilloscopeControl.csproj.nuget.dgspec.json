@@ -1,0 +1,57 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\GitHub\\robot_theophile_wemaere\\c#\\WpfOscilloscope\\WpfOscilloscopeControl.csproj": {}
+  },
+  "projects": {
+    "C:\\GitHub\\robot_theophile_wemaere\\c#\\WpfOscilloscope\\WpfOscilloscopeControl.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\GitHub\\robot_theophile_wemaere\\c#\\WpfOscilloscope\\WpfOscilloscopeControl.csproj",
+        "projectName": "WpfOscilloscopeControl",
+        "projectPath": "C:\\GitHub\\robot_theophile_wemaere\\c#\\WpfOscilloscope\\WpfOscilloscopeControl.csproj",
+        "packagesPath": "C:\\Users\\TP_EO_6\\.nuget\\packages\\",
+        "outputPath": "C:\\GitHub\\robot_theophile_wemaere\\c#\\WpfOscilloscope\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "configFilePaths": [
+          "C:\\Users\\TP_EO_6\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net48"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net48": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {
+          "dependencies": {
+            "SciChart": {
+              "target": "Package",
+              "version": "[6.3.0.13476, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}
