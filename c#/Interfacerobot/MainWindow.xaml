@@ -79,12 +79,12 @@
                 <Border BorderBrush="White" BorderThickness="1" Grid.Column="0" Grid.RowSpan="2"/>
                 <Border BorderBrush="White" BorderThickness="1" Grid.Column="1" Grid.RowSpan="2"/>
                 <Border BorderBrush="White" BorderThickness="1" Grid.Column="3" Grid.RowSpan="2"/>
-                <TextBox x:Name="txtKp" Margin="25,15,10,10" Text="" Foreground="White" Grid.Column="0" Grid.Row="0" Background="{x:Null}" BorderBrush="{x:Null}"/>
-                <TextBox x:Name="txtKi" Margin="25,15,10,10" Text="" Foreground="White" Grid.Column="1" Grid.Row="0" Background="{x:Null}" BorderBrush="{x:Null}"/>
-                <TextBox x:Name="txtKd" Margin="25,15,10,10" Text="" Foreground="White" Grid.Column="2" Grid.Row="0" Background="{x:Null}" BorderBrush="{x:Null}"/>
-                <TextBox x:Name="txtKpMax" Margin="25,15,10,10" Text="" Foreground="White" Grid.Column="0" Grid.Row="1" Background="{x:Null}" BorderBrush="{x:Null}"/>
-                <TextBox x:Name="txtKiMax" Margin="25,15,10,10" Text="" Foreground="White" Grid.Column="1" Grid.Row="1" Background="{x:Null}" BorderBrush="{x:Null}"/>
-                <TextBox x:Name="txtKdMax" Margin="25,15,10,10" Text="" Foreground="White" Grid.Column="2" Grid.Row="1" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <TextBox x:Name="txtKp" Margin="25,15,10,10" Text="0" Foreground="White" Grid.Column="0" Grid.Row="0" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <TextBox x:Name="txtKi" Margin="25,15,10,10" Text="0" Foreground="White" Grid.Column="1" Grid.Row="0" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <TextBox x:Name="txtKd" Margin="25,15,10,10" Text="0" Foreground="White" Grid.Column="2" Grid.Row="0" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <TextBox x:Name="txtKpMax" Margin="25,15,10,10" Text="0" Foreground="White" Grid.Column="0" Grid.Row="1" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <TextBox x:Name="txtKiMax" Margin="25,15,10,10" Text="0" Foreground="White" Grid.Column="1" Grid.Row="1" Background="{x:Null}" BorderBrush="{x:Null}"/>
+                <TextBox x:Name="txtKdMax" Margin="25,15,10,10" Text="0" Foreground="White" Grid.Column="2" Grid.Row="1" Background="{x:Null}" BorderBrush="{x:Null}"/>
 
             </Grid>
         </GroupBox>

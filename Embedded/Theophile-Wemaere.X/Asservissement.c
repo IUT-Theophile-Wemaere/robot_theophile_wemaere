@@ -14,20 +14,20 @@ void SetupPidAssservissement(volatile PidCorrector* PidCorr, double Kp, double K
 }
 
 double Correcteur(volatile PidCorrector* PidCorr, double erreur) {
-    PidCorr -> erreur = erreur;
-    double erreurProportionnelle = LimitToInterval(erreur, -PidCorr->erreurDeriveeMax / PidCorr->Kp, PidCorr->erreurDeriveeMax / PidCorr->Kp);
-    PidCorr -> corrP = erreurProportionnelle * PidCorr->Kp;
+//    PidCorr -> erreur = erreur;
+//    double erreurProportionnelle = LimitToInterval(erreur, -PidCorr->erreurDeriveeMax, PidCorr->erreurDeriveeMax);
+//    PidCorr -> corrP = erreurProportionnelle * PidCorr->Kp;
 
-    PidCorr -> erreurIntegrale += PidCorr->erreurIntegrale + erreur / FREQ_ECH_QEI;
+    PidCorr -> erreurIntegrale += PidCorr->Ki * erreur / FREQ_ECH_QEI;
     PidCorr -> erreurIntegrale = LimitToInterval(PidCorr->erreurIntegrale, -PidCorr->erreurIntegrale / PidCorr->Ki, PidCorr->erreurIntegrale / PidCorr->Ki);
-    PidCorr -> corrI = PidCorr->erreurIntegrale * PidCorr->Ki;
+    PidCorr -> corrI = PidCorr->erreurIntegrale + PidCorr->corrI;
 
-    double erreurDerivee = (erreur - PidCorr->epsilon_1) * FREQ_ECH_QEI;
-    double deriveeBornee = LimitToInterval(erreurDerivee, -PidCorr->erreurDeriveeMax / PidCorr->Kd, PidCorr->erreurDeriveeMax / PidCorr->Kd);
-    PidCorr->epsilon_1 = erreur;
-    PidCorr->corrD = deriveeBornee * PidCorr->Kd;
+//    double erreurDerivee = (erreur - PidCorr->epsilon_1) * FREQ_ECH_QEI;
+//    double deriveeBornee = LimitToInterval(erreurDerivee, -PidCorr->erreurDeriveeMax / PidCorr->Kd, PidCorr->erreurDeriveeMax / PidCorr->Kd);
+//    PidCorr->epsilon_1 = erreur;
+//    PidCorr->corrD = deriveeBornee * PidCorr->Kd;
 
-    return PidCorr->corrP + PidCorr->corrI + PidCorr->corrD;
+    return (PidCorr->corrP + PidCorr->corrI + PidCorr->corrD)   ;
 }
 
 //void SetUpPiAsservissementVitesseAngulaire() {

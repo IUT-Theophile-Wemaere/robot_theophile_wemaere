@@ -9,7 +9,7 @@ void PWMUpdateSpeed(void);
 //void PWMSetSpeed(float vitesseEnPourcents, int moteur);
 void PWMSetSpeedConsigne(float vitesseEnpourcents, int moteur);
 
-void PWMSetSpeedConsignePolaire(float, float);
+void PWMSetSpeedConsignePolaire();
 void SendPIDData(void);
 void UpdateAsservissemment();
 

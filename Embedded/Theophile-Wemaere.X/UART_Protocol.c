@@ -55,6 +55,7 @@ void UartEncodeAndSendMessage(int msgFunction, int msgPayloadLength, unsigned ch
 
 }
 
+
 void UartDecodeMessage(unsigned char c) {
     switch (rcvState) {
         case Waiting:

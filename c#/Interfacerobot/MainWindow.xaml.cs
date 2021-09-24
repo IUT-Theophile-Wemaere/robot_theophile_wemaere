@@ -47,7 +47,7 @@ namespace Interfacerobot
             m_KeyboardHookManager = new KeyboardHookListener(new GlobalHooker());
             m_KeyboardHookManager.Enabled = true;
             m_KeyboardHookManager.KeyDown += HookManager_KeyDown;
-            m_KeyboardHookManager.KeyUp += HookManager_KeyUp;
+           // m_KeyboardHookManager.KeyUp += HookManager_KeyUp;
 
         }
 
@@ -443,7 +443,7 @@ namespace Interfacerobot
                 switch (e.KeyCode)
                 {
                     case Keys.Up:
-                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 4, 0 });
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 2, 0 });
                         break;
 
                     //case Keys.Down:
@@ -451,45 +451,45 @@ namespace Interfacerobot
                     //    break;
 
                     case Keys.Left:
-                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0,Convert.ToByte(Math.PI/2) });
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0,Convert.ToByte(Math.PI) });
                         break;
 
                     case Keys.Right:
-                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0,Convert.ToByte(Math.PI / 2) });
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0,Convert.ToByte(Math.PI) });
                         break;
 
-                    //case Keys.PageDown:
-                    //    UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0, 0 });
-                    //    break;
+                    case Keys.PageDown:
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0, 0 });
+                        break;
 
                 }
             }
         }
 
-        private void HookManager_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
-        {
-            if (autoControlActivated == false)
-            {
-                switch (e.KeyCode)
-                {
-                    case Keys.Up:
-                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0, 0 });
-                        break;
+        //private void HookManager_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        //{
+        //    if (autoControlActivated == true)
+        //    {
+        //        switch (e.KeyCode)
+        //        {
+        //            case Keys.Up:
+        //                UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0, 0 });
+        //                break;
 
-                    case Keys.Down:
-                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0, 0 });
-                        break;
+        //            case Keys.Down:
+        //                UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0, 0 });
+        //                break;
 
-                    case Keys.Left:
-                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0, 0 });
-                        break;
+        //            case Keys.Left:
+        //                UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0, 0 });
+        //                break;
 
-                    case Keys.Right:
-                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0, 0 });
-                        break;
-                }
-            }
-        }
+        //            case Keys.Right:
+        //                UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0, 0 });
+        //                break;
+        //        }
+        //    }
+        //}
 
         #endregion
 
@@ -590,20 +590,21 @@ namespace Interfacerobot
 
         private void buttonSendPID_Click(object sender, RoutedEventArgs e)
         {
-            byte kp, ki, kd, kpMax, kiMax, kdMax;
-            kp = Convert.ToByte(txtKp.Text);
-            ki = Convert.ToByte(txtKi.Text);
-            kd = Convert.ToByte(txtKd.Text);
-            kpMax = Convert.ToByte(txtKpMax.Text);
-            kiMax = Convert.ToByte(txtKiMax.Text);
-            kdMax = Convert.ToByte(txtKdMax.Text);
-            txtKp.Text = "";
-            txtKi.Text = "";
-            txtKd.Text = "";
-            txtKpMax.Text = "";
-            txtKiMax.Text = "";
-            txtKdMax.Text = "";
-            UartEncodeAndSendMessage(0x0064, 7, new byte[] { Convert.ToByte(switchState), kp, ki, kd, kpMax, kiMax, kdMax });
+            //byte kp, ki, kd, kpMax, kiMax, kdMax;
+            //kp = Convert.ToByte(txtKp.Text);
+            //ki = Convert.ToByte(txtKi.Text);
+            //kd = Convert.ToByte(txtKd.Text);
+            //kpMax = Convert.ToByte(txtKpMax.Text);
+            //kiMax = Convert.ToByte(txtKiMax.Text);
+            //kdMax = Convert.ToByte(txtKdMax.Text);
+            //txtKp.Text = "";
+            //txtKi.Text = "";
+            //txtKd.Text = "";
+            //txtKpMax.Text = "";
+            //txtKiMax.Text = "";
+            //txtKdMax.Text = "";
+            //UartEncodeAndSendMessage(0x0064, 7, new byte[] { Convert.ToByte(switchState), kp, ki, kd, kpMax, kiMax, kdMax });
+            UartEncodeAndSendMessage(0x0064, 7, new byte[] { 0, 3, 200, 0, 100, 20, 100 });
         }
 
         #endregion
