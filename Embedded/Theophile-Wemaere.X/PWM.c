@@ -119,13 +119,66 @@ void PWMSetSpeedConsigne(float vitesseEnpourcents, int moteur) {
     }
 }
 
-void UpdateAsservissemment(){
+void UpdateAsservissemment() {
     robotState.PidX.erreur = robotState.vitesseLineaireConsigne - robotState.vitesseLineaireFromOdometry;
     robotState.PidTheta.erreur = robotState.vitesseAngulaireConsigne - robotState.vitesseAngulaireFromOdometry;
-    
+
     robotState.xCorrectionVitessePourcent = Correcteur(&robotState.PidX, robotState.PidX.erreur);
     robotState.thetaCorrectionVitessePorcent = Correcteur(&robotState.PidTheta, robotState.PidTheta.erreur);
+
+    PWMSetSpeedConsignePolaire(robotState.xCorrectionVitessePourcent, robotState.thetaCorrectionVitessePorcent);
 }
+
+void PWMSetSpeedConsignePolaire(float xCorrVitesse, float thetaCorrVitesse) {
+    /********************** Correction Angulaire **********************/
+    //robotState.vitesseAngulaireCommande = thetaCorrVitesse * COEFF_VITESSE_ANGULAIRE_PERCENT;
+    robotState.vitesseAngulaireCommande = robotState.vitesseAngulaireConsigne * COEFF_VITESSE_ANGULAIRE_PERCENT;
+
+    /********************** Correction Lineaire *****************************/
+    //robotState.vitesseLineaireCommande = robotState.xCorrVitesse * COEFF_VITESSE_LINEAIRE_PERCENT;
+    robotState.vitesseLineaireCommande = robotState.vitesseLineaireConsigne * COEFF_VITESSE_LINEAIRE_PERCENT;
+
+    /************* Génération des consignes droites et gauches ******************/
+    robotState.vitesseDroiteConsigne = (robotState.vitesseLineaireCommande + robotState.vitesseAngulaireCommande * DISTROUES / 2);
+    robotState.vitesseDroiteConsigne = LimitToInterval1(robotState.vitesseDroiteConsigne, -100, 100);
+    robotState.vitesseGaucheConsigne = (robotState.vitesseLineaireCommande - robotState.vitesseAngulaireCommande * DISTROUES / 2);
+    robotState.vitesseGaucheConsigne = LimitToInterval1(robotState.vitesseGaucheConsigne, -100, 100);
+}
+
+void SendPIDData(void) {
+    unsigned char payloadPID[96];
+
+    getBytesFromFloat(payloadPID, 0, (float) robotState.vitesseAngulaireErreur);
+    getBytesFromFloat(payloadPID, 4, (float) (robotState.vitesseAngulaireCommande));
+    getBytesFromFloat(payloadPID, 8, (float) (robotState.PidTheta.Kp));
+    getBytesFromFloat(payloadPID, 12, (float) (robotState.PidTheta.corrP));
+    getBytesFromFloat(payloadPID, 16, (float) (robotState.PidTheta.Ki));
+    getBytesFromFloat(payloadPID, 20, (float) (robotState.PidTheta.corrI));
+    getBytesFromFloat(payloadPID, 24, (float) (robotState.PidTheta.Kd));
+    getBytesFromFloat(payloadPID, 28, (float) (robotState.PidTheta.corrD));
+
+    getBytesFromFloat(payloadPID, 32, (float) robotState.vitesseLineaireErreur);
+    getBytesFromFloat(payloadPID, 36, (float) (robotState.vitesseLineaireCommande));
+    getBytesFromFloat(payloadPID, 40, (float) (robotState.PidX.Kp));
+    getBytesFromFloat(payloadPID, 44, (float) (robotState.PidX.corrP));
+    getBytesFromFloat(payloadPID, 48, (float) (robotState.PidX.Ki));
+    getBytesFromFloat(payloadPID, 52, (float) (robotState.PidX.corrI));
+    getBytesFromFloat(payloadPID, 56, (float) (robotState.PidX.Kd));
+    getBytesFromFloat(payloadPID, 60, (float) (robotState.PidX.corrD));
+
+    getBytesFromFloat(payloadPID, 64, (float) robotState.vitesseAngulaireConsigne);
+    getBytesFromFloat(payloadPID, 68, (float) robotState.vitesseLineaireConsigne);
+
+    getBytesFromFloat(payloadPID, 72, (float) robotState.PidTheta.erreurPorportionnelleMax);
+    getBytesFromFloat(payloadPID, 76, (float) robotState.PidTheta.erreurIntegraleMax);
+    getBytesFromFloat(payloadPID, 80, (float) robotState.PidTheta.erreurDeriveeMax);
+    getBytesFromFloat(payloadPID, 84, (float) robotState.PidX.erreurPorportionnelleMax);
+    getBytesFromFloat(payloadPID, 88, (float) robotState.PidX.erreurIntegraleMax);
+    getBytesFromFloat(payloadPID, 92, (float) robotState.PidX.erreurDeriveeMax);
+
+    UartEncodeAndSendMessage(ASSERVISSEMENT, 96, payloadPID);
+}
+
 
 //void PWMSetSpeedConsignePolaire() {
 //    /********************** Correction Angulaire **********************/
@@ -169,36 +222,37 @@ void UpdateAsservissemment(){
 //    robotState.vitesseGaucheConsigne = LimitToInterval1(robotState.vitesseGaucheConsigne, -100, 100);
 //}
 
-void SendPIDData(void) {
-    unsigned char payloadPID[96];
 
-    getBytesFromFloat(payloadPID, 0, (float) robotState.vitesseAngulaireErreur);
-    getBytesFromFloat(payloadPID, 4, (float) (robotState.vitesseAngulaireCommande));
-    getBytesFromFloat(payloadPID, 8, (float) (robotState.KpAngulaire));
-    getBytesFromFloat(payloadPID, 12, (float) (robotState.CorrectionAngulaireKp));
-    getBytesFromFloat(payloadPID, 16, (float) (robotState.KiAngulaire));
-    getBytesFromFloat(payloadPID, 20, (float) (robotState.CorrectionAngulaireKi));
-    getBytesFromFloat(payloadPID, 24, (float) (robotState.KdAngulaire));
-    getBytesFromFloat(payloadPID, 28, (float) (robotState.CorrectionAngulaireKd));
-
-    getBytesFromFloat(payloadPID, 32, (float) robotState.vitesseLineaireErreur);
-    getBytesFromFloat(payloadPID, 36, (float) (robotState.vitesseLineaireCommande));
-    getBytesFromFloat(payloadPID, 40, (float) (robotState.KpLineaire));
-    getBytesFromFloat(payloadPID, 44, (float) (robotState.CorrectionLineaireKp));
-    getBytesFromFloat(payloadPID, 48, (float) (robotState.KiLineaire));
-    getBytesFromFloat(payloadPID, 52, (float) (robotState.CorrectionLineaireKi));
-    getBytesFromFloat(payloadPID, 56, (float) (robotState.KdLineaire));
-    getBytesFromFloat(payloadPID, 60, (float) (robotState.CorrectionLineaireKd));
-
-    getBytesFromFloat(payloadPID, 64, (float) robotState.vitesseAngulaireConsigne);
-    getBytesFromFloat(payloadPID, 68, (float) robotState.vitesseLineaireConsigne);
-
-    getBytesFromFloat(payloadPID, 72, (float) robotState.KpAngulaireMax);
-    getBytesFromFloat(payloadPID, 76, (float) robotState.KiAngulaireMax);
-    getBytesFromFloat(payloadPID, 80, (float) robotState.KdAngulaireMax);
-    getBytesFromFloat(payloadPID, 84, (float) robotState.KpLineaireMax);
-    getBytesFromFloat(payloadPID, 88, (float) robotState.KiLineaireMax);
-    getBytesFromFloat(payloadPID, 92, (float) robotState.KdLineaireMax);
-
-    UartEncodeAndSendMessage(ASSERVISSEMENT, 96, payloadPID);
-}
+//void SendPIDData(void){
+//    unsigned char payloadPID[96];
+//
+//    getBytesFromFloat(payloadPID, 0, (float) robotState.vitesseAngulaireErreur);
+//    getBytesFromFloat(payloadPID, 4, (float) (robotState.vitesseAngulaireCommande));
+//    getBytesFromFloat(payloadPID, 8, (float) (robotState.KpAngulaire));
+//    getBytesFromFloat(payloadPID, 12, (float) (robotState.CorrectionAngulaireKp));
+//    getBytesFromFloat(payloadPID, 16, (float) (robotState.KiAngulaire));
+//    getBytesFromFloat(payloadPID, 20, (float) (robotState.CorrectionAngulaireKi));
+//    getBytesFromFloat(payloadPID, 24, (float) (robotState.KdAngulaire));
+//    getBytesFromFloat(payloadPID, 28, (float) (robotState.CorrectionAngulaireKd));
+//
+//    getBytesFromFloat(payloadPID, 32, (float) robotState.vitesseLineaireErreur);
+//    getBytesFromFloat(payloadPID, 36, (float) (robotState.vitesseLineaireCommande));
+//    getBytesFromFloat(payloadPID, 40, (float) (robotState.KpLineaire));
+//    getBytesFromFloat(payloadPID, 44, (float) (robotState.CorrectionLineaireKp));
+//    getBytesFromFloat(payloadPID, 48, (float) (robotState.KiLineaire));
+//    getBytesFromFloat(payloadPID, 52, (float) (robotState.CorrectionLineaireKi));
+//    getBytesFromFloat(payloadPID, 56, (float) (robotState.KdLineaire));
+//    getBytesFromFloat(payloadPID, 60, (float) (robotState.CorrectionLineaireKd));
+//
+//    getBytesFromFloat(payloadPID, 64, (float) robotState.vitesseAngulaireConsigne);
+//    getBytesFromFloat(payloadPID, 68, (float) robotState.vitesseLineaireConsigne);
+//
+//    getBytesFromFloat(payloadPID, 72, (float) robotState.KpAngulaireMax);
+//    getBytesFromFloat(payloadPID, 76, (float) robotState.KiAngulaireMax);
+//    getBytesFromFloat(payloadPID, 80, (float) robotState.KdAngulaireMax);
+//    getBytesFromFloat(payloadPID, 84, (float) robotState.KpLineaireMax);
+//    getBytesFromFloat(payloadPID, 88, (float) robotState.KiLineaireMax);
+//    getBytesFromFloat(payloadPID, 92, (float) robotState.KdLineaireMax);
+//
+//    UartEncodeAndSendMessage(ASSERVISSEMENT, 96, payloadPID);
+//}

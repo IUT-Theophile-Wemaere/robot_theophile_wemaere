@@ -70,8 +70,8 @@ int main(void) {
     InitQEI1();
     InitQEI2();
     
-//    robotState.vitesseAngulaireConsigne = PI/2; //en rad.s-1
-//    robotState.vitesseLineaireConsigne = 0; // en m.s-1
+    robotState.vitesseAngulaireConsigne = 0; //en rad.s-1
+    robotState.vitesseLineaireConsigne = 0; // en m.s-1
 
     //   PWMSetSpeedConsigne(-20, MOTEUR_DROIT);
     
@@ -111,7 +111,7 @@ void SetRobotState(unsigned char RobotState) {
     stateRobot = RobotState;
 }
 
-unsigned char ModeAuto = 1;
+unsigned char ModeAuto = 0;
 
 void SetRobotAutoControlState(unsigned char ReceivedControl) {
     if (ReceivedControl == 0) {
@@ -328,6 +328,6 @@ void SendRobotState(void) {
 
 void SetRobotSpeed(float linear, float angular) 
 {
-    robotState.vitesseLineaireConsigne = linear/10;
-    robotState.vitesseAngulaireConsigne = angular/10;
+    robotState.vitesseLineaireConsigne = linear/10.0;
+    robotState.vitesseAngulaireConsigne = angular/10.0;
 }

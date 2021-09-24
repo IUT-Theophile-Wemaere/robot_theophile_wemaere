@@ -78,9 +78,9 @@ int subSamplingCounterT1 = 0;
 void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
     IFS0bits.T1IF = 0;
     ADC1StartConversionSequence();
-    PWMUpdateSpeed();
-//  PWMSetSpeedConsignePolaire();
     QEIUpdateData();
+    UpdateAsservissemment();
+    PWMUpdateSpeed();
 
     if (subSamplingCounterT1++ % 10 == 0) {
         //        unsigned char MOTEUR[] = {MOTEUR_GAUCHE_DUTY_CYCLE / 40, MOTEUR_DROIT_DUTY_CYCLE / 40};

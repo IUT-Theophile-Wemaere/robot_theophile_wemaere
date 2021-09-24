@@ -3,27 +3,30 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/robot.c</file>
             <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/ChipConfig.c</file>
+            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/UART_Protocol.h</file>
+            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/CB_RX1.h</file>
+            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/QEI.h</file>
+            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/nbproject/Makefile-default.mk</file>
+            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/main.c</file>
+            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/Asservissement.h</file>
+            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/CB_RX1.c</file>
+            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/Asservissement.c</file>
+            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/UART_Protocol.c</file>
+            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/robot.c</file>
+            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/CB_TX1.h</file>
             <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/robot.h</file>
             <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/PWM.c</file>
-            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/UART_Protocol.h</file>
             <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/timer.h</file>
             <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/toolbox.h</file>
             <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/Utilities.h</file>
             <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/ADC.c</file>
             <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/toolbox.c</file>
-            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/QEI.h</file>
             <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/main.h</file>
             <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/Utilities.c</file>
-            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/main.c</file>
             <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/QEI.c</file>
-            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/Asservissement.h</file>
-            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/CB_RX1.c</file>
             <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/PWM.h</file>
             <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/UART.c</file>
-            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/Asservissement.c</file>
-            <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/UART_Protocol.c</file>
             <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/timer.c</file>
             <file>file:/C:/GitHub/robot_theophile_wemaere/Embedded/Theophile-Wemaere.X/UART.h</file>
         </group>

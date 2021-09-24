@@ -24,7 +24,7 @@ typedef struct _PidCorrector
 
 void SetupPidAssservissement(volatile PidCorrector* PidCorr, double Kp, double Ki, double Kd,
         double proportionelleMax, double integralMax, double deriveeMax);
-
 double Correcteur(volatile PidCorrector* PidCorr, double erreur);
+
 #endif	
 

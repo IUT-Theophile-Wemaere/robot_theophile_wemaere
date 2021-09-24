@@ -6,6 +6,7 @@
 #include "main.h"
 #include "toolbox.h"
 #include "Asservissement.h"
+#include "robot.h"
 
 int msgDecodedFunction = 0;
 int msgDecodedPayloadLength = 0;
@@ -133,7 +134,10 @@ void UartProcessDecodedMessage(unsigned char function, unsigned char payloadLeng
             break;
 
         case SET_PID:
-            SetupPidAssservissement(payload[0], payload[1], payload[2], payload[3], payload[4], payload[5], payload[6]);
+            if(payload[0] == 0)
+                SetupPidAssservissement(&robotState.PidX, payload[1], payload[2], payload[3], payload[4], payload[5], payload[6]);
+            else
+                SetupPidAssservissement(&robotState.PidTheta, payload[1], payload[2], payload[3], payload[4], payload[5], payload[6]);
             break;
     }
 }

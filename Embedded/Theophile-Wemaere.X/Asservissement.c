@@ -4,11 +4,11 @@
 #include "Utilities.h"
 
 void SetupPidAssservissement(volatile PidCorrector* PidCorr, double Kp, double Ki, double Kd,
-        double proportionelleMax, double integralMax, double deriveeMax) {
+        double proportionelleMax, double integraleMax, double deriveeMax) {
     PidCorr -> Kp = Kp;
     PidCorr -> erreurPorportionnelleMax = proportionelleMax;
     PidCorr -> Ki = Ki;
-    PidCorr -> erreurIntegraleMax = integralMax;
+    PidCorr -> erreurIntegraleMax = integraleMax;
     PidCorr -> Kd = Kd;
     PidCorr -> erreurDeriveeMax = deriveeMax;
 }

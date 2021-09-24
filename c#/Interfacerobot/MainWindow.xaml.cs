@@ -428,7 +428,7 @@ namespace Interfacerobot
                     AsservDisplay.UpdatePolarSpeedErrorValues(vLinError, vAngError);
                     AsservDisplay.UpdatePolarSpeedCorrectionGains(KpLin, KpAng, KiLin, KiAng, KdLin, KdAng);
                     AsservDisplay.UpdatePolarSpeedCorrectionValues(CorrectKpLin, CorrectKpAng, CorrectKiLin, CorrectKiAng, CorrectKdLin, CorrectKdAng);
-                    AsservDisplay.UpdatePolarSpeedCorrectionLimits(CorrectKpLinMax, CorrectKiLinMax, CorrectKdLinMax, CorrectKpAngMax, CorrectKiAngMax, CorrectKdAngMax);
+                    AsservDisplay.UpdatePolarSpeedCorrectionLimits(CorrectKpLinMax, CorrectKpAngMax, CorrectKiLinMax, CorrectKiAngMax, CorrectKdLinMax, CorrectKdAngMax);
 
                     AsservDisplay.UpdateDisplay();
                     break;
@@ -446,9 +446,9 @@ namespace Interfacerobot
                         UartEncodeAndSendMessage(0x0053, 2, new byte[] { 4, 0 });
                         break;
 
-                    case Keys.Down:
-                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { Convert.ToByte(- 4), 0 }); ;
-                        break;
+                    //case Keys.Down:
+                    //    UartEncodeAndSendMessage(0x0053, 2, new sbyte[] { -4, 0 }); ;
+                    //    break;
 
                     case Keys.Left:
                         UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0,Convert.ToByte(Math.PI/2) });
@@ -457,13 +457,18 @@ namespace Interfacerobot
                     case Keys.Right:
                         UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0,Convert.ToByte(Math.PI / 2) });
                         break;
+
+                    //case Keys.PageDown:
+                    //    UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0, 0 });
+                    //    break;
+
                 }
             }
         }
 
         private void HookManager_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
         {
-            if (autoControlActivated == true)
+            if (autoControlActivated == false)
             {
                 switch (e.KeyCode)
                 {
@@ -598,7 +603,7 @@ namespace Interfacerobot
             txtKpMax.Text = "";
             txtKiMax.Text = "";
             txtKdMax.Text = "";
-            UartEncodeAndSendMessage(0x0064, 6, new byte[] { Convert.ToByte(switchState), kp, ki, kd, kpMax, kiMax, kdMax });
+            UartEncodeAndSendMessage(0x0064, 7, new byte[] { Convert.ToByte(switchState), kp, ki, kd, kpMax, kiMax, kdMax });
         }
 
         #endregion
