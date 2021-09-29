@@ -443,7 +443,7 @@ namespace Interfacerobot
                 switch (e.KeyCode)
                 {
                     case Keys.Up:
-                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 2, 0 });
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 1, 0 });
                         break;
 
                     //case Keys.Down:
@@ -604,7 +604,7 @@ namespace Interfacerobot
             //txtKiMax.Text = "";
             //txtKdMax.Text = "";
             //UartEncodeAndSendMessage(0x0064, 7, new byte[] { Convert.ToByte(switchState), kp, ki, kd, kpMax, kiMax, kdMax });
-            UartEncodeAndSendMessage(0x0064, 7, new byte[] { 0, 3, 200, 0, 100, 20, 100 });
+            UartEncodeAndSendMessage(0x0064, 7, new byte[] { 0, 0, 200, 0, 20, 1, 20 });
         }
 
         #endregion

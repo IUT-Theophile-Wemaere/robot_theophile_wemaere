@@ -168,10 +168,10 @@ void SendPIDData(void) {
     getBytesFromFloat(payloadPID, 64, (float) robotState.vitesseAngulaireConsigne);
     getBytesFromFloat(payloadPID, 68, (float) robotState.vitesseLineaireConsigne);
 
-    getBytesFromFloat(payloadPID, 72, (float) robotState.PidTheta.erreurPorportionnelleMax);
+    getBytesFromFloat(payloadPID, 72, (float) robotState.PidTheta.erreurProportionnelleMax);
     getBytesFromFloat(payloadPID, 76, (float) robotState.PidTheta.erreurIntegraleMax);
     getBytesFromFloat(payloadPID, 80, (float) robotState.PidTheta.erreurDeriveeMax);
-    getBytesFromFloat(payloadPID, 84, (float) robotState.PidX.erreurPorportionnelleMax);
+    getBytesFromFloat(payloadPID, 84, (float) robotState.PidX.erreurProportionnelleMax);
     getBytesFromFloat(payloadPID, 88, (float) robotState.PidX.erreurIntegraleMax);
     getBytesFromFloat(payloadPID, 92, (float) robotState.PidX.erreurDeriveeMax);
 

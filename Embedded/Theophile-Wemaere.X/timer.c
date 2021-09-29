@@ -80,8 +80,8 @@ void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void) {
     ADC1StartConversionSequence();
     QEIUpdateData();
     UpdateAsservissemment();
-    PWMUpdateSpeed();
     PWMSetSpeedConsignePolaire();
+//    PWMUpdateSpeed();
 
     if (subSamplingCounterT1++ % 10 == 0) {
         //        unsigned char MOTEUR[] = {MOTEUR_GAUCHE_DUTY_CYCLE / 40, MOTEUR_DROIT_DUTY_CYCLE / 40};

@@ -9,7 +9,7 @@ typedef struct _PidCorrector
     double Kp;
     double Ki;
     double Kd;
-    double erreurPorportionnelleMax;
+    double erreurProportionnelleMax;
     double erreurIntegraleMax;
     double erreurDeriveeMax;
     double erreurIntegrale;
