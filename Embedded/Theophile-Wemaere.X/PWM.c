@@ -130,12 +130,12 @@ void UpdateAsservissemment(){
 
 void PWMSetSpeedConsignePolaire() {
     /********************** Correction Angulaire **********************/
-    //robotState.vitesseAngulairePourcent = robotState.thetaCorrectionVitesseCommande * COEFF_VITESSE_ANGULAIRE_PERCENT;
-    robotState.vitesseAngulairePourcent = robotState.vitesseAngulaireConsigne * COEFF_VITESSE_ANGULAIRE_PERCENT;
+    robotState.vitesseAngulairePourcent = robotState.thetaCorrectionVitesseCommande * COEFF_VITESSE_ANGULAIRE_PERCENT;
+    //robotState.vitesseAngulairePourcent = robotState.vitesseAngulaireConsigne * COEFF_VITESSE_ANGULAIRE_PERCENT;
 
     /********************** Correction Lineaire *****************************/
-    robotState.vitesseLineairePourcent = robotState.xCorrectionVitesseCommande * COEFF_VITESSE_LINEAIRE_PERCENT;
-//    robotState.vitesseLineairePourcent = robotState.vitesseLineaireConsigne * COEFF_VITESSE_LINEAIRE_PERCENT;
+    //robotState.vitesseLineairePourcent = robotState.xCorrectionVitesseCommande * COEFF_VITESSE_LINEAIRE_PERCENT;
+    robotState.vitesseLineairePourcent = robotState.vitesseLineaireConsigne * COEFF_VITESSE_LINEAIRE_PERCENT;
 
     /************* Génération des consignes droites et gauches ******************/
     robotState.vitesseDroiteConsigne = (robotState.vitesseLineairePourcent + robotState.vitesseAngulairePourcent * DISTROUES / 2);

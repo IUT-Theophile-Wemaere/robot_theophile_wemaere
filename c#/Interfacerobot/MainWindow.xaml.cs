@@ -604,7 +604,7 @@ namespace Interfacerobot
             //txtKiMax.Text = "";
             //txtKdMax.Text = "";
             //UartEncodeAndSendMessage(0x0064, 7, new byte[] { Convert.ToByte(switchState), kp, ki, kd, kpMax, kiMax, kdMax });
-            UartEncodeAndSendMessage(0x0064, 7, new byte[] { 0, 0, 150, 0, 20, 20, 20 });
+            UartEncodeAndSendMessage(0x0064, 7, new byte[] { Convert.ToByte(switchState), 40,100,30, 10, 10, 10 });
         }
 
         #endregion
