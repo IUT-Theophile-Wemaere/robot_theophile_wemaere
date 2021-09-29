@@ -124,23 +124,23 @@ void UpdateAsservissemment(){
     robotState.PidX.erreur = robotState.vitesseLineaireConsigne - robotState.vitesseLineaireFromOdometry;
     robotState.PidTheta.erreur = robotState.vitesseAngulaireConsigne - robotState.vitesseAngulaireFromOdometry;
 
-    robotState.xCorrectionVitessePourcent = Correcteur(&robotState.PidX, robotState.PidX.erreur);
-    robotState.thetaCorrectionVitessePourcent = Correcteur(&robotState.PidTheta, robotState.PidTheta.erreur);
+    robotState.xCorrectionVitesseCommande = Correcteur(&robotState.PidX, robotState.PidX.erreur);
+    robotState.thetaCorrectionVitesseCommande = Correcteur(&robotState.PidTheta, robotState.PidTheta.erreur);
 }
 
 void PWMSetSpeedConsignePolaire() {
     /********************** Correction Angulaire **********************/
-    //robotState.vitesseAngulaireCommande = robotState.thetaCorrectionVitessePourcent * COEFF_VITESSE_ANGULAIRE_PERCENT;
-    robotState.vitesseAngulaireCommande = robotState.vitesseAngulaireConsigne * COEFF_VITESSE_ANGULAIRE_PERCENT;
+    //robotState.vitesseAngulairePourcent = robotState.thetaCorrectionVitesseCommande * COEFF_VITESSE_ANGULAIRE_PERCENT;
+    robotState.vitesseAngulairePourcent = robotState.vitesseAngulaireConsigne * COEFF_VITESSE_ANGULAIRE_PERCENT;
 
     /********************** Correction Lineaire *****************************/
-    robotState.vitesseLineaireCommande = robotState.xCorrectionVitessePourcent * COEFF_VITESSE_LINEAIRE_PERCENT;
-//    robotState.vitesseLineaireCommande = robotState.vitesseLineaireConsigne * COEFF_VITESSE_LINEAIRE_PERCENT;
+    robotState.vitesseLineairePourcent = robotState.xCorrectionVitesseCommande * COEFF_VITESSE_LINEAIRE_PERCENT;
+//    robotState.vitesseLineairePourcent = robotState.vitesseLineaireConsigne * COEFF_VITESSE_LINEAIRE_PERCENT;
 
     /************* Génération des consignes droites et gauches ******************/
-    robotState.vitesseDroiteConsigne = (robotState.vitesseLineaireCommande + robotState.vitesseAngulaireCommande * DISTROUES / 2);
+    robotState.vitesseDroiteConsigne = (robotState.vitesseLineairePourcent + robotState.vitesseAngulairePourcent * DISTROUES / 2);
     robotState.vitesseDroiteConsigne = LimitToInterval1(robotState.vitesseDroiteConsigne, -100, 100);
-    robotState.vitesseGaucheConsigne = (robotState.vitesseLineaireCommande - robotState.vitesseAngulaireCommande * DISTROUES / 2);
+    robotState.vitesseGaucheConsigne = (robotState.vitesseLineairePourcent - robotState.vitesseAngulairePourcent * DISTROUES / 2);
     robotState.vitesseGaucheConsigne = LimitToInterval1(robotState.vitesseGaucheConsigne, -100, 100);
 }
 
@@ -148,7 +148,7 @@ void SendPIDData(void) {
     unsigned char payloadPID[96];
 
     getBytesFromFloat(payloadPID, 0, (float) robotState.vitesseAngulaireErreur);
-    getBytesFromFloat(payloadPID, 4, (float) (robotState.vitesseAngulaireCommande));
+    getBytesFromFloat(payloadPID, 4, (float) (robotState.thetaCorrectionVitesseCommande));
     getBytesFromFloat(payloadPID, 8, (float) (robotState.PidTheta.Kp));
     getBytesFromFloat(payloadPID, 12, (float) (robotState.PidTheta.corrP));
     getBytesFromFloat(payloadPID, 16, (float) (robotState.PidTheta.Ki));
@@ -157,7 +157,7 @@ void SendPIDData(void) {
     getBytesFromFloat(payloadPID, 28, (float) (robotState.PidTheta.corrD));
 
     getBytesFromFloat(payloadPID, 32, (float) robotState.vitesseLineaireErreur);
-    getBytesFromFloat(payloadPID, 36, (float) (robotState.vitesseLineaireCommande));
+    getBytesFromFloat(payloadPID, 36, (float) (robotState.xCorrectionVitesseCommande));
     getBytesFromFloat(payloadPID, 40, (float) (robotState.PidX.Kp));
     getBytesFromFloat(payloadPID, 44, (float) (robotState.PidX.corrP));
     getBytesFromFloat(payloadPID, 48, (float) (robotState.PidX.Ki));

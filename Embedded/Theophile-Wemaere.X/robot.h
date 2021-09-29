@@ -46,7 +46,7 @@ typedef struct robotStateBITS {
             double KdAngulaireMax;
 
             double vitesseLineaireConsigne;
-            double vitesseLineaireCommande;
+            double vitesseLineairePourcent;
             double vitesseLineaireErreur;
             double vitesseLineaireCorrection;
             double CorrectionLineaireKp;
@@ -54,7 +54,7 @@ typedef struct robotStateBITS {
             double CorrectionLineaireKd;
 
             double vitesseAngulaireConsigne;
-            double vitesseAngulaireCommande;
+            double vitesseAngulairePourcent;
             double vitesseAngulaireErreur;
             double vitesseAngulaireCorrection;
             double CorrectionAngulaireKp;
@@ -62,8 +62,8 @@ typedef struct robotStateBITS {
             double CorrectionAngulaireKd;
             
             PidCorrector PidX, PidTheta;
-            double xCorrectionVitessePourcent;
-            double thetaCorrectionVitessePourcent;
+            double xCorrectionVitesseCommande;
+            double thetaCorrectionVitesseCommande;
         }
         ;
     }
