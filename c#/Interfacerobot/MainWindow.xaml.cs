@@ -21,6 +21,11 @@ using System.Windows.Forms;
 using Utilities;
 using WpfAsservissementDisplay;
 
+//adieu code moche - Théophile aka Tihmz
+//j'adore les compilations... -Tanguy a.k.a Diozik 
+// "MouseKeyboardActivityMonitor.dll => illégal " - M.Gies
+
+
 namespace Interfacerobot
 {
     public partial class MainWindow : Window
@@ -446,22 +451,13 @@ namespace Interfacerobot
                         UartEncodeAndSendMessage(0x0053, 2, new byte[] { 1, 0 });
                         break;
 
-                    //case Keys.Down:
-                    //    UartEncodeAndSendMessage(0x0053, 2, new sbyte[] { -4, 0 }); ;
-                    //    break;
-
                     case Keys.Left:
                         UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0,Convert.ToByte(Math.PI/4) });
                         break;
 
-                    case Keys.Right:
-                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0,Convert.ToByte(Math.PI/4) });
-                        break;
-
-                    case Keys.PageDown:
+                    case Keys.Space:
                         UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0, 0 });
-                        break;
-
+                        break; 
                 }
             }
         }
@@ -590,7 +586,7 @@ namespace Interfacerobot
 
         private void buttonSendPID_Click(object sender, RoutedEventArgs e)
         {
-            float kp, ki, kd, kpMax, kiMax, kdMax;
+            float kpLin, kiLin, kdLin, kpMaxLin, kiMaxLin, kdMaxLin, kpAng, kiAng, kdAng, kpMaxAng, kiMaxAng, kdMaxAng;
             byte[] payload = new byte[28];
 
             //kp = Convert.ToByte(txtKp.Text);
@@ -606,40 +602,39 @@ namespace Interfacerobot
             //txtKiMax.Text = "";
             //txtKdMax.Text = "";
 
-            kp = 3.0f;
-            ki = 120f;
-            kd = 0.02f;
-            kpMax = 1000;
-            kiMax = 1000;
-            kdMax = 1000;
+            kpAng = 3.0f; //3.0f
+            kiAng = 120f; //120f
+            kdAng = 0.02f; //0.02f
+            kpMaxAng = 1000;
+            kiMaxAng = 1000;
+            kdMaxAng = 1000;
 
             payload.SetValueRange(((float)(1)).GetBytes(), 0);
-            payload.SetValueRange(((float)(kp)).GetBytes(), 4);
-            payload.SetValueRange(((float)(ki)).GetBytes(), 8);
-            payload.SetValueRange(((float)(kd)).GetBytes(), 12);
-            payload.SetValueRange(((float)(kpMax)).GetBytes(), 16);
-            payload.SetValueRange(((float)(kiMax)).GetBytes(), 20);
-            payload.SetValueRange(((float)(kdMax)).GetBytes(), 24);
+            payload.SetValueRange(((float)(kpAng)).GetBytes(), 4);
+            payload.SetValueRange(((float)(kiAng)).GetBytes(), 8);
+            payload.SetValueRange(((float)(kdAng)).GetBytes(), 12);
+            payload.SetValueRange(((float)(kpMaxAng)).GetBytes(), 16);
+            payload.SetValueRange(((float)(kiMaxAng)).GetBytes(), 20);
+            payload.SetValueRange(((float)(kdMaxAng)).GetBytes(), 24);
             UartEncodeAndSendMessage(0x0064, 28, payload);
 
-            kp =3.0f;
-            ki = 100f;
-            kd = 0.01f;
-            kpMax = 1000;
-            kiMax = 1000;
-            kdMax = 1000;
+            kpLin =3.0f; //3.0f
+            kiLin = 100f; //100f
+            kdLin = 0.01f; //0.01f
+            kpMaxLin = 1000;
+            kiMaxLin = 1000;
+            kdMaxLin = 1000;
 
-            payload.SetValueRange(((float)(0)).GetBytes(),0);
-            payload.SetValueRange(((float)(kp)).GetBytes(),4);
-            payload.SetValueRange(((float)(ki)).GetBytes(), 8);
-            payload.SetValueRange(((float)(kd)).GetBytes(), 12);
-            payload.SetValueRange(((float)(kpMax)).GetBytes(), 16);
-            payload.SetValueRange(((float)(kiMax)).GetBytes(), 20);
-            payload.SetValueRange(((float)(kdMax)).GetBytes(), 24);
+            payload.SetValueRange(((float)(0)).GetBytes(),0);    
+            payload.SetValueRange(((float)(kpLin)).GetBytes(),4);
+            payload.SetValueRange(((float)(kiLin)).GetBytes(), 8);
+            payload.SetValueRange(((float)(kdLin)).GetBytes(), 12);
+            payload.SetValueRange(((float)(kpMaxLin)).GetBytes(), 16);
+            payload.SetValueRange(((float)(kiMaxLin)).GetBytes(), 20);
+            payload.SetValueRange(((float)(kdMaxLin)).GetBytes(), 24);
             UartEncodeAndSendMessage(0x0064, 28, payload);
         }
 
         #endregion
     }
 }
-
