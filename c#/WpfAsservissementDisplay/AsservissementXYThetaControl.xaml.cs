@@ -149,79 +149,79 @@ namespace WpfAsservissementDisplay
 
           public void UpdateDisplay()
           {
-              LabelConsigneX.Content = consigneXList.Average().ToString("N2");
-              LabelConsigneTheta.Content = consigneThetaList.Average().ToString("N2");
-              LabelConsigneM1.Content = consigneM1List.Average().ToString("N2");
-              LabelConsigneM2.Content = consigneM2List.Average().ToString("N2");
+              LabelConsigneX.Content = consigneXList.Average().ToString("N3");
+              LabelConsigneTheta.Content = consigneThetaList.Average().ToString("N3");
+              LabelConsigneM1.Content = consigneM1List.Average().ToString("N3");
+              LabelConsigneM2.Content = consigneM2List.Average().ToString("N3");
 
-              LabelMeasureX.Content = measuredXList.Average().ToString("N2");
-              LabelMeasureTheta.Content = measuredThetaList.Average().ToString("N2");
-              LabelMeasureM1.Content = measuredM1List.Average().ToString("N2");
-              LabelMeasureM2.Content = measuredM2List.Average().ToString("N2");
+              LabelMeasureX.Content = measuredXList.Average().ToString("N3");
+              LabelMeasureTheta.Content = measuredThetaList.Average().ToString("N3");
+              LabelMeasureM1.Content = measuredM1List.Average().ToString("N3");
+              LabelMeasureM2.Content = measuredM2List.Average().ToString("N3");
 
-              LabelErreurX.Content = errorXList.Average().ToString("N2");
-              LabelErreurTheta.Content = errorThetaList.Average().ToString("N2");
-              LabelErreurM1.Content = errorM1List.Average().ToString("N2");
-              LabelErreurM2.Content = errorM2List.Average().ToString("N2");
+              LabelErreurX.Content = errorXList.Average().ToString("N3");
+              LabelErreurTheta.Content = errorThetaList.Average().ToString("N3");
+              LabelErreurM1.Content = errorM1List.Average().ToString("N3");
+              LabelErreurM2.Content = errorM2List.Average().ToString("N3");
 
-              LabelCommandX.Content = commandXList.Average().ToString("N2");
-              LabelCommandTheta.Content = commandThetaList.Average().ToString("N2");
-              LabelCommandM1.Content = commandM1List.Average().ToString("N2");
-              LabelCommandM2.Content = commandM2List.Average().ToString("N2");
+              LabelCommandX.Content = commandXList.Average().ToString("N3");
+              LabelCommandTheta.Content = commandThetaList.Average().ToString("N3");
+              LabelCommandM1.Content = commandM1List.Average().ToString("N3");
+              LabelCommandM2.Content = commandM2List.Average().ToString("N3");
 
-              LabelKpX.Content = KpX.ToString("N2");
-              LabelKpTheta.Content = KpTheta.ToString("N2");
-              LabelKpM1.Content = KpM1.ToString("N2");
-              LabelKpM2.Content = KpM2.ToString("N2");
+              LabelKpX.Content = KpX.ToString("N3");
+              LabelKpTheta.Content = KpTheta.ToString("N3");
+              LabelKpM1.Content = KpM1.ToString("N3");
+              LabelKpM2.Content = KpM2.ToString("N3");
 
-              LabelKiX.Content = KiX.ToString("N2");
-              LabelKiTheta.Content = KiTheta.ToString("N2");
-              LabelKiM1.Content = KiM1.ToString("N2");
-              LabelKiM2.Content = KiM2.ToString("N2");
+              LabelKiX.Content = KiX.ToString("N3");
+              LabelKiTheta.Content = KiTheta.ToString("N3");
+              LabelKiM1.Content = KiM1.ToString("N3");
+              LabelKiM2.Content = KiM2.ToString("N3");
 
-              LabelKdX.Content = KdX.ToString("N2");
-              LabelKdTheta.Content = KdTheta.ToString("N2");
-              LabelKdM1.Content = KdM1.ToString("N2");
-              LabelKdM2.Content = KdM2.ToString("N2");
+              LabelKdX.Content = KdX.ToString("N3");
+              LabelKdTheta.Content = KdTheta.ToString("N3");
+              LabelKdM1.Content = KdM1.ToString("N3");
+              LabelKdM2.Content = KdM2.ToString("N3");
 
-              LabelCorrMaxPX.Content = corrLimitPX.ToString("N2");
-              LabelCorrMaxPTheta.Content = corrLimitPTheta.ToString("N2");
-              LabelCorrMaxPM1.Content = corrLimitPM1.ToString("N2");
-              LabelCorrMaxPM2.Content = corrLimitPM2.ToString("N2");
+              LabelCorrMaxPX.Content = corrLimitPX.ToString("N3");
+              LabelCorrMaxPTheta.Content = corrLimitPTheta.ToString("N3");
+              LabelCorrMaxPM1.Content = corrLimitPM1.ToString("N3");
+              LabelCorrMaxPM2.Content = corrLimitPM2.ToString("N3");
 
-              LabelCorrMaxIX.Content = corrLimitIX.ToString("N2");
-              LabelCorrMaxITheta.Content = corrLimitITheta.ToString("N2");
-              LabelCorrMaxIM1.Content = corrLimitIM1.ToString("N2");
-              LabelCorrMaxIM2.Content = corrLimitIM2.ToString("N2");
+              LabelCorrMaxIX.Content = corrLimitIX.ToString("N3");
+              LabelCorrMaxITheta.Content = corrLimitITheta.ToString("N3");
+              LabelCorrMaxIM1.Content = corrLimitIM1.ToString("N3");
+              LabelCorrMaxIM2.Content = corrLimitIM2.ToString("N3");
 
-              LabelCorrMaxDX.Content = corrLimitDX.ToString("N2");
-              LabelCorrMaxDTheta.Content = corrLimitDTheta.ToString("N2");
-              LabelCorrMaxDM1.Content = corrLimitDM1.ToString("N2");
-              LabelCorrMaxDM2.Content = corrLimitDM2.ToString("N2");
+              LabelCorrMaxDX.Content = corrLimitDX.ToString("N3");
+              LabelCorrMaxDTheta.Content = corrLimitDTheta.ToString("N3");
+              LabelCorrMaxDM1.Content = corrLimitDM1.ToString("N3");
+              LabelCorrMaxDM2.Content = corrLimitDM2.ToString("N3");
 
 
               if (corrPXList.Count > 0)
               {
-                  LabelCorrPX.Content = corrPXList.Average().ToString("N2");
-                  LabelCorrPTheta.Content = corrPThetaList.Average().ToString("N2");
+                  LabelCorrPX.Content = corrPXList.Average().ToString("N3");
+                  LabelCorrPTheta.Content = corrPThetaList.Average().ToString("N3");
 
-                  LabelCorrIX.Content = corrIXList.Average().ToString("N2");
-                  LabelCorrITheta.Content = corrIThetaList.Average().ToString("N2");
+                  LabelCorrIX.Content = corrIXList.Average().ToString("N3");
+                  LabelCorrITheta.Content = corrIThetaList.Average().ToString("N3");
 
-                  LabelCorrDX.Content = corrDXList.Average().ToString("N2");
-                  LabelCorrDTheta.Content = corrDThetaList.Average().ToString("N2");
+                  LabelCorrDX.Content = corrDXList.Average().ToString("N3");
+                  LabelCorrDTheta.Content = corrDThetaList.Average().ToString("N3");
               }
 
               if (corrPM1List.Count > 0)
               {
-                  LabelCorrPM1.Content = corrPM1List.Average().ToString("N2");
-                  LabelCorrPM2.Content = corrPM2List.Average().ToString("N2");
+                  LabelCorrPM1.Content = corrPM1List.Average().ToString("N3");
+                  LabelCorrPM2.Content = corrPM2List.Average().ToString("N3");
 
-                  LabelCorrIM1.Content = corrIM1List.Average().ToString("N2");
-                  LabelCorrIM2.Content = corrIM2List.Average().ToString("N2");
+                  LabelCorrIM1.Content = corrIM1List.Average().ToString("N3");
+                  LabelCorrIM2.Content = corrIM2List.Average().ToString("N3");
 
-                  LabelCorrDM1.Content = corrDM1List.Average().ToString("N2");
-                  LabelCorrDM2.Content = corrDM2List.Average().ToString("N2");
+                  LabelCorrDM1.Content = corrDM1List.Average().ToString("N3");
+                  LabelCorrDM2.Content = corrDM2List.Average().ToString("N3");
               }
           }
 

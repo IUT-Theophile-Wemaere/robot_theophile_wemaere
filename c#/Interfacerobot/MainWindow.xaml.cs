@@ -37,7 +37,7 @@ namespace Interfacerobot
         public MainWindow()
         {
             InitializeComponent();
-            serialPort1 = new ReliableSerialPort("COM7", 115200, Parity.None, 8, StopBits.One);
+            serialPort1 = new ReliableSerialPort("COM4", 115200, Parity.None, 8, StopBits.One);
             serialPort1.DataReceived += SerialPort1_DataReceived;
             serialPort1.Open();
             timerAffichage = new DispatcherTimer();
@@ -451,11 +451,11 @@ namespace Interfacerobot
                     //    break;
 
                     case Keys.Left:
-                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0,Convert.ToByte(Math.PI) });
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0,Convert.ToByte(Math.PI/4) });
                         break;
 
                     case Keys.Right:
-                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0,Convert.ToByte(Math.PI) });
+                        UartEncodeAndSendMessage(0x0053, 2, new byte[] { 0,Convert.ToByte(Math.PI/4) });
                         break;
 
                     case Keys.PageDown:
@@ -590,7 +590,9 @@ namespace Interfacerobot
 
         private void buttonSendPID_Click(object sender, RoutedEventArgs e)
         {
-            //byte kp, ki, kd, kpMax, kiMax, kdMax;
+            float kp, ki, kd, kpMax, kiMax, kdMax;
+            byte[] payload = new byte[28];
+
             //kp = Convert.ToByte(txtKp.Text);
             //ki = Convert.ToByte(txtKi.Text);
             //kd = Convert.ToByte(txtKd.Text);
@@ -603,8 +605,38 @@ namespace Interfacerobot
             //txtKpMax.Text = "";
             //txtKiMax.Text = "";
             //txtKdMax.Text = "";
-            //UartEncodeAndSendMessage(0x0064, 7, new byte[] { Convert.ToByte(switchState), kp, ki, kd, kpMax, kiMax, kdMax });
-            UartEncodeAndSendMessage(0x0064, 7, new byte[] { Convert.ToByte(switchState), 40,100,30, 10, 10, 10 });
+
+            kp = 3.0f;
+            ki = 120f;
+            kd = 0.02f;
+            kpMax = 1000;
+            kiMax = 1000;
+            kdMax = 1000;
+
+            payload.SetValueRange(((float)(1)).GetBytes(), 0);
+            payload.SetValueRange(((float)(kp)).GetBytes(), 4);
+            payload.SetValueRange(((float)(ki)).GetBytes(), 8);
+            payload.SetValueRange(((float)(kd)).GetBytes(), 12);
+            payload.SetValueRange(((float)(kpMax)).GetBytes(), 16);
+            payload.SetValueRange(((float)(kiMax)).GetBytes(), 20);
+            payload.SetValueRange(((float)(kdMax)).GetBytes(), 24);
+            UartEncodeAndSendMessage(0x0064, 28, payload);
+
+            kp =3.0f;
+            ki = 100f;
+            kd = 0.01f;
+            kpMax = 1000;
+            kiMax = 1000;
+            kdMax = 1000;
+
+            payload.SetValueRange(((float)(0)).GetBytes(),0);
+            payload.SetValueRange(((float)(kp)).GetBytes(),4);
+            payload.SetValueRange(((float)(ki)).GetBytes(), 8);
+            payload.SetValueRange(((float)(kd)).GetBytes(), 12);
+            payload.SetValueRange(((float)(kpMax)).GetBytes(), 16);
+            payload.SetValueRange(((float)(kiMax)).GetBytes(), 20);
+            payload.SetValueRange(((float)(kdMax)).GetBytes(), 24);
+            UartEncodeAndSendMessage(0x0064, 28, payload);
         }
 
         #endregion

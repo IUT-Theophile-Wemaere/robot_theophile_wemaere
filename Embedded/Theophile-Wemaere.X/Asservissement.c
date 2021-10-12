@@ -5,17 +5,17 @@
 
 void SetupPidAssservissement(volatile PidCorrector* PidCorr, double Kp, double Ki, double Kd,
         double proportionelleMax, double integraleMax, double deriveeMax) {
-    PidCorr -> Kp = Kp/10; 
-    // limite ang : 8 => 4
-    // limite lin : 9.2 => 4.6
+    PidCorr -> Kp = Kp;   
+    // limite ang : 3
+    // limite lin : 
     PidCorr -> erreurProportionnelleMax = proportionelleMax;
     PidCorr -> Ki = Ki; 
-    // limite ang : 100 => 70
-    //limite lim 110 => 77
+    // limite ang : 120
+    //limite lin : 
     PidCorr -> erreurIntegraleMax = integraleMax;
-    PidCorr -> Kd = Kd/1000; 
-    // limite ang : 0.035 => 0.03
-    // Limite lim : 0.005 => 0.002
+    PidCorr -> Kd = Kd; 
+    // limite ang : 0.02
+    // Limite lin : 
     PidCorr -> erreurDeriveeMax = deriveeMax;
 }
 

@@ -7,6 +7,7 @@
 #include "toolbox.h"
 #include "Asservissement.h"
 #include "robot.h"
+#include "Utilities.h"
 
 int msgDecodedFunction = 0;
 int msgDecodedPayloadLength = 0;
@@ -54,7 +55,6 @@ void UartEncodeAndSendMessage(int msgFunction, int msgPayloadLength, unsigned ch
     SendMessage(trame, pos);
 
 }
-
 
 void UartDecodeMessage(unsigned char c) {
     switch (rcvState) {
@@ -115,6 +115,9 @@ void UartDecodeMessage(unsigned char c) {
     }
 }
 
+int speedState;
+double Kp, Ki, Kd, KpMax, KiMax, KdMax;
+
 void UartProcessDecodedMessage(unsigned char function, unsigned char payloadLength, unsigned char * payload) {
     switch (function) {
         case SET_ROBOT_STATE:
@@ -135,10 +138,17 @@ void UartProcessDecodedMessage(unsigned char function, unsigned char payloadLeng
             break;
 
         case SET_PID:
-            if(payload[0] == 0)
-                SetupPidAssservissement(&robotState.PidX, payload[1], payload[2], payload[3], payload[4], payload[5], payload[6]);
+            speedState = getFloat(payload, 0);
+            Kp = getFloat(payload, 4);
+            Ki = getFloat(payload, 8);
+            Kd = getFloat(payload, 12);
+            KpMax = getFloat(payload, 16);
+            KiMax = getFloat(payload, 20);
+            KdMax = getFloat(payload, 24);
+            if (speedState == 0)
+                SetupPidAssservissement(&robotState.PidX, Kp, Ki, Kd, KpMax, KiMax, KdMax);
             else
-                SetupPidAssservissement(&robotState.PidTheta, payload[1], payload[2], payload[3], payload[4], payload[5], payload[6]);
+                SetupPidAssservissement(&robotState.PidTheta, Kp, Ki, Kd, KpMax, KiMax, KdMax);
             break;
     }
 }
