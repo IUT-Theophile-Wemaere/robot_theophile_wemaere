@@ -36,7 +36,7 @@ class Tracking:
         # Start measuring image processing time (NOTE: does not account for input conversion time):
         self.timer.start()
 
-        blurred = cv2.GaussianBkur(inframe,(11,11),0)
+        blurred = cv2.GaussianBlur(inframe,(11,11),0)
         hsv= cv2.cvtColor(blurred,cv2.COLOR_BGR2HSV)
         #apply mask
         mask = cv2.inRange(hsv,yellowLower,yellowUpper)
