@@ -16,7 +16,8 @@ using System.Windows.Shapes;
 using ExtendedSerialPort;
 using System.Windows.Threading;
 using System.Globalization;
-
+using System.Collections.Concurrent;
+using System.Timers;
 
 namespace Interfacerobot
 {
@@ -35,33 +36,33 @@ namespace Interfacerobot
         string jevoisData,jevoisString;
 
 
+        ConcurrentQueue<byte> receivedData = new ConcurrentQueue<byte>();
         private void SerialPort1_DataReceived(object sender, DataReceivedArgs e)
         {
-            jevoisData = Encoding.UTF8.GetString(e.Data, 0, e.Data.Length);
-            if (jevoisData == "D" && jevoisString!=null)//&& jevoisData[-1]=='\n')
+            foreach (var c in e.Data)
             {
-                string[] JeVoisArray = jevoisString.Split(' ');
-                if(JeVoisArray.Length == 12) //size of the JeVois input payload
-                {
-                    PrintJeVoisData(JeVoisArray);
-                }
-                jevoisString = "";
+                ProcessJeVoisData(c);
             }
-            jevoisString += jevoisData;
-            
+        }
 
-            /*Dispatcher.Invoke(() =>
+        string jeVoisCurrentFrame = "";
+        void ProcessJeVoisData(byte c)
+        {
+            if(c=='D')
             {
-                jevoisData = Encoding.UTF8.GetString(e.Data, 0, e.Data.Length);
-                if (jevoisData == "D")//&& jevoisData[-1]=='\n')
-                {
-                    JevoisLog.Text += jevoisString;
-                    jevoisString = "";
-                }
-                jevoisString += jevoisData; 
-                JevoisLog.ScrollToEnd();
-                JevoisLog.Text += jevoisData;
-            });*/
+                AnalyzeJeVoisData(jeVoisCurrentFrame);
+                jeVoisCurrentFrame = "";            
+            }
+            jeVoisCurrentFrame += Encoding.UTF8.GetString(new byte[]{c}, 0, 1); 
+        }
+
+        void AnalyzeJeVoisData(string s)
+        {
+            string[] jeVoisArray = s.Split(' ');
+            if (jeVoisArray.Length == 12) //size of the JeVois input payload
+            {
+                PrintJeVoisData(jeVoisArray);
+            }
         }
 
         private void PrintJeVoisData(string[] inputArray)
@@ -80,15 +81,15 @@ namespace Interfacerobot
             q2 = float.Parse(inputArray[9], CultureInfo.InvariantCulture.NumberFormat);
             q3 = float.Parse(inputArray[10], CultureInfo.InvariantCulture.NumberFormat);
             q4 = float.Parse(inputArray[11], CultureInfo.InvariantCulture.NumberFormat);
-            //result = String.Format("Dim : {0} | ID : {1} | X = {2} | Y = {3} | Z = {4} | Width = {5} | Height = {6} | Depth = {7} | q1 = {8} | q2 = {9} | q3 = {10} | q4 = {11}", Dim,ID,x,y,z,w,h,d,q1,q2,q3,q4);
-            //Console.WriteLine(result);
+            result = String.Format("Dim : {0} | ID : {1} | X = {2} | Y = {3} | Z = {4} | Width = {5} | Height = {6} | Depth = {7} | q1 = {8} | q2 = {9} | q3 = {10} | q4 = {11}", Dim,ID,x,y,z,w,h,d,q1,q2,q3,q4);
+            Console.WriteLine(result);
 
             double qangle = 2 * Math.Acos(q1);
             double qx = q2 / Math.Sqrt(1 - q1 * q1);
             double qy = q3 / Math.Sqrt(1 - q1 * q1);
             double qz = q4 / Math.Sqrt(1 - q1 * q1);
-            result = String.Format(" q1 = {0} | q2 = {1} | q3 = {2} | q4 = {3}", qangle,qx,qy,qz);
-            Console.WriteLine(result);
+            //result = String.Format(" q1 = {0} | q2 = {1} | q3 = {2} | q4 = {3}", qangle,qx,qy,qz);
+            Console.WriteLine(Utilities.Toolbox.Modulo2PiAngleRad(CalculateQuaternions(q1,q2,q3,q4)));
 
 
 
@@ -109,7 +110,7 @@ namespace Interfacerobot
 
         }
 
-        private int CalculateQuaternions(double q1, double q2, double q3, double q4)
+        private double CalculateQuaternions(double q1, double q2, double q3, double q4)
         {
             if (q1 > 1) q1 = q1/ Math.Sqrt(Math.Pow(q2, 2) + Math.Pow(q3, 2) + Math.Pow(q4, 2)); // if w>1 acos and sqrt will produce errors, this cant happen if quaternion is normalised
 
@@ -131,8 +132,9 @@ namespace Interfacerobot
                 y = q3 / s;
                 z = q4 / s;
             }
-
-            return 
+            //string result = String.Format(" x = {0} | y = {1} | z = {2}}", x, y, z);
+            //Console.WriteLine(result);
+            return angle;
         }
 
     }
