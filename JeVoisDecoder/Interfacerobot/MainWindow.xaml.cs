@@ -64,17 +64,12 @@ namespace Interfacerobot
             string[] jeVoisArray = s.Split(' ');
             if (jeVoisArray.Length == 11) //size of the JeVois input payload
             {
-                PrintJeVoisData(jeVoisArray);
                 AnalyzeJeVoisData(jeVoisArray);
             }
         }
 
         List<ArucoLutElement> ArucoLut = new List<ArucoLutElement>();
 
-        //List<int> XArucoField = new List<int>();
-        //List<int> YArucoField = new List<int>();
-        //List<double> XArucoMeasured = new List<double>();
-        //List<double> YArucoMeasured = new List<double>();
 
         private void Analyze_Click(object sender, RoutedEventArgs e)
         {
@@ -122,25 +117,50 @@ namespace Interfacerobot
                         lutElement.yMeasured = (lutElement.pt1.Y + lutElement.pt2.Y + lutElement.pt3.Y + lutElement.pt4.Y) / 4.0;
 
                         ArucoLut.Add(lutElement);
+
+                        //Génération du symétrique par rapport à l'axe vertical
+
+                        if (lutElement.xField != 0)
+                        {
+                            ArucoLutElement lutElementSym = new ArucoLutElement();
+
+                            lutElementSym.xField = -lutElement.xField;
+                            lutElementSym.yField = lutElement.yField;
+                            lutElementSym.xMeasured = -lutElement.xMeasured;
+                            lutElementSym.yMeasured = lutElement.yMeasured;
+                            lutElementSym.thetaField = 180 - lutElement.thetaField;
+                            lutElementSym.pt1 = new PointD(-lutElement.pt1.X, lutElement.pt1.Y);
+                            lutElementSym.pt2 = new PointD(-lutElement.pt2.X, lutElement.pt2.Y);
+                            lutElementSym.pt3 = new PointD(-lutElement.pt3.X, lutElement.pt3.Y);
+                            lutElementSym.pt4 = new PointD(-lutElement.pt4.X, lutElement.pt4.Y);
+
+                            ArucoLut.Add(lutElementSym);
+                        }
+
                     }
                 }
             }
         }
 
+        double x1, x2, x3, x4, y1, y2, y3, y4;
 
         private void AnalyzeJeVoisData(string[] inputArray)
         {
+            for(int i =0; i< inputArray.Length;i++)
+            {
+                inputArray[i] =  inputArray[i].Replace('.', ',');
+            }
             if(ArucoLut.Count > 0)
             {
-                int x1, x2, x3, x4, y1, y2, y3, y4;
-                x1 = int.Parse(inputArray[3]);
-                y1 = int.Parse(inputArray[4]);
-                x2 = int.Parse(inputArray[5]);
-                y2 = int.Parse(inputArray[6]);
-                x3 = int.Parse(inputArray[7]);
-                y3 = int.Parse(inputArray[8]);
-                x4 = int.Parse(inputArray[9]);
-                y4 = int.Parse(inputArray[10]);
+               
+                x1 = double.Parse(inputArray[3]);
+                y1 = double.Parse(inputArray[4]);
+                x2 = double.Parse(inputArray[5]);
+                y2 = double.Parse(inputArray[6]);
+                x3 = double.Parse(inputArray[7]);
+                y3 = double.Parse(inputArray[8]);
+                x4 = double.Parse(inputArray[9]);
+                y4 = double.Parse(inputArray[10]);
 
                 double xMeasured = (x1 + x2 + x3 + x4) / 4.0;
                 double yMeasured = (y1 + y2 + y3 + y4) / 4.0;
@@ -200,54 +220,6 @@ namespace Interfacerobot
                 Console.WriteLine("Pos calculée : " + posArucoField.X.ToString("F1") + " - " + posArucoField.Y.ToString("F1"));
             }
 
-        }
-
-
-        int x1, x2, x3, x4, y1, y2, y3, y4;
-        private void PrintJeVoisData(string[] inputArray)
-        {
-            string Dim, ID, result;
-
-            Dim =inputArray[0];
-            ID=inputArray[1].Substring(1);
-            x1 = int.Parse(inputArray[3]);
-            y1 = int.Parse(inputArray[4]);
-            x2 = int.Parse(inputArray[5]);
-            y2 = int.Parse(inputArray[6]);
-            x3 = int.Parse(inputArray[7]);
-            y3 = int.Parse(inputArray[8]);
-            x4 = int.Parse(inputArray[9]);
-            y4 = int.Parse(inputArray[10]);
-
-            //PrintSegmentsSizes(x1,y1,x2,y2,x3,y3,x4,y4);
-
-            result = String.Format("Dim : {0} | ID : {1} | X1Y1 = ({2},{3}) | X2Y2 = ({4},{5}) | X3Y3 = ({6},{7}) | X4Y4 = ({8},{9}) ", Dim, ID, x1, y1, x2, y2, x3, y3, x4, y4);
-
-            Console.WriteLine(result);
-
-        }
-
-        private void PrintSegmentsSizes(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4)
-        {
-            double seg12, seg23, seg34, seg41, Ang12, Ang23, Ang34, Ang41;
-
-            seg12 = Math.Sqrt(Math.Pow((x2 - x1), 2) + Math.Pow((y2 - y1), 2));
-            seg23 = Math.Sqrt(Math.Pow((x3 - x2), 2) + Math.Pow((y3 - y2), 2));
-            seg34 = Math.Sqrt(Math.Pow((x4 - x3), 2) + Math.Pow((y4 - y3), 2));
-            seg41 = Math.Sqrt(Math.Pow((x1 - x4), 2) + Math.Pow((y1 - y4), 2));
-
-            string result = String.Format("Seg12 = {0} | Seg23 = {1} | Seg34 = {2} | Seg41 = {3} |",seg12,seg23,seg34,seg41);
-
-            /*/
-            Ang12 = Math.Atan2((x2 - x1),(y2 - y1));
-            Ang23 = Math.Atan2((x3 - x2), (y3 - y2));
-            Ang34 = Math.Atan2((x4 - x3), (y4 - y3));
-            Ang41 = Math.Atan2((x1 - x4), (y1 - y4));
-            /*/
-
-            //string result = String.Format("Seg12 = {0} | Seg23 = {1} | Seg34 = {2} | Seg41 = {3} |", Ang12*180/Math.PI, Ang23 * 180 / Math.PI, Ang34 * 180 / Math.PI, Ang41 * 180 / Math.PI);
-
-            Console.WriteLine(result);
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
