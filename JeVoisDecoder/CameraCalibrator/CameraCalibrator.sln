@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraCalibrator", "CameraCalibrator.csproj", "{4E97AF2E-471A-4971-ACE3-AC496AC8D615}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "..\Utilities\Utilities.csproj", "{8E7D0DA4-9A13-4B18-A90E-0243BBCCE40A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedSerialPort", "..\ExtendedSerialPort\ExtendedSerialPort.csproj", "{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E97AF2E-471A-4971-ACE3-AC496AC8D615}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E97AF2E-471A-4971-ACE3-AC496AC8D615}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E97AF2E-471A-4971-ACE3-AC496AC8D615}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4E97AF2E-471A-4971-ACE3-AC496AC8D615}.Debug|x64.Build.0 = Debug|Any CPU
+		{4E97AF2E-471A-4971-ACE3-AC496AC8D615}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E97AF2E-471A-4971-ACE3-AC496AC8D615}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E97AF2E-471A-4971-ACE3-AC496AC8D615}.Release|x64.ActiveCfg = Release|Any CPU
+		{4E97AF2E-471A-4971-ACE3-AC496AC8D615}.Release|x64.Build.0 = Release|Any CPU
+		{8E7D0DA4-9A13-4B18-A90E-0243BBCCE40A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E7D0DA4-9A13-4B18-A90E-0243BBCCE40A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E7D0DA4-9A13-4B18-A90E-0243BBCCE40A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8E7D0DA4-9A13-4B18-A90E-0243BBCCE40A}.Debug|x64.Build.0 = Debug|Any CPU
+		{8E7D0DA4-9A13-4B18-A90E-0243BBCCE40A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E7D0DA4-9A13-4B18-A90E-0243BBCCE40A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E7D0DA4-9A13-4B18-A90E-0243BBCCE40A}.Release|x64.ActiveCfg = Release|Any CPU
+		{8E7D0DA4-9A13-4B18-A90E-0243BBCCE40A}.Release|x64.Build.0 = Release|Any CPU
+		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Debug|x64.Build.0 = Debug|Any CPU
+		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Release|x64.ActiveCfg = Release|Any CPU
+		{21AC599E-E3D5-4181-AA0F-7C2E00CCA016}.Release|x64.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {575583D0-0FE0-4B4F-8FD3-AD44D4A73162}
+	EndGlobalSection
+EndGlobal
