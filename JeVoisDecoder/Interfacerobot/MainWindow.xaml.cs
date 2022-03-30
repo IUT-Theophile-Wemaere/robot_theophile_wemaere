@@ -53,7 +53,7 @@ namespace Interfacerobot
         {
             if(c=='D')
             {
-                AnalyzeJeVoisData(jeVoisCurrentFrame);
+                AnalyzeData(jeVoisCurrentFrame);
                 jeVoisCurrentFrame = "";            
             }
             jeVoisCurrentFrame += Encoding.UTF8.GetString(new byte[]{c}, 0, 1); 
@@ -144,7 +144,7 @@ namespace Interfacerobot
 
         double x1, x2, x3, x4, y1, y2, y3, y4;
 
-        private void AnalyzeJeVoisData(string[] inputArray)
+        private void AnalyzeData(string[] inputArray)
         {
             for(int i =0; i< inputArray.Length;i++)
             {
