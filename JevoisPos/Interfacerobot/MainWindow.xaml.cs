@@ -94,13 +94,15 @@ namespace Interfacerobot
                         var values = line.Split(';');
                         int pos = 0;
 
-                        ArucoLutElement lutElement = new ArucoLutElement();
-                        double xField = int.Parse(values[pos++]);
-                        double yField = int.Parse(values[pos++]);
-                        lutElement.dist0M = Math.Sqrt(Math.Pow((0 - xField), 2) + Math.Pow((0 - yField), 2));
-                        pos++;
+                        Console.WriteLine(values[0]);
 
-                        double xA = int.Parse(values[pos++]);
+                        ArucoLutElement lutElement = new ArucoLutElement();
+                        
+                        lutElement.dist0M = float.Parse(values[pos++], CultureInfo.InvariantCulture.NumberFormat);
+
+                        Console.WriteLine(lutElement.dist0M);
+
+                        double xA = float.Parse(values[pos++]);
                         double yA = int.Parse(values[pos++]);
                         double xB = int.Parse(values[pos++]);
                         double yB = int.Parse(values[pos++]);
@@ -169,11 +171,7 @@ namespace Interfacerobot
                     double segDA = Math.Sqrt(Math.Pow((xD - xA), 2) + Math.Pow((yD - yA), 2));
 
                     /// On calcule la distance à chaque element de la LUT
-                    var ArucoClosestList = ArucoLut.OrderBy(p => Math.Abs(p.segAB - segAB)).ToList();
-                    for(int i = 0; i < ArucoClosestList.Count; i++)
-                    {
-                        Console.WriteLine("Dist : " + ArucoClosestList[i].dist0M);
-                    }
+                    var ArucoClosestList = ArucoLut.OrderBy(p => Math.Abs(segAB - p.segAB)).ToList();
 
                     var closest_value = ArucoClosestList[0];
                     //Console.WriteLine( segAB + " | " + closest_value.segAB );
@@ -188,15 +186,13 @@ namespace Interfacerobot
         private void button_Click(object sender, RoutedEventArgs e)
         {
 
-            string path = "C:\\Users\\Table 12\\Documents\\GitHub\\robot_theophile_wemaere\\JeVoisDecoder\\Data\\log.csv";
+            string path = "C:\\GitHub\\robot_theophile_wemaere\\JeVoisPos\\Data\\log.csv";
 
-            string Xreel = tbXreel.Text;
-            string Yreel = tbYreel.Text;
-            string Theta = tbTheta.Text;
+            string distance = tbXreel.Text;
 
             tbXreel.Text = ""; tbYreel.Text = ""; tbTheta.Text = "";
 
-            string log = Xreel + ";" + Yreel + ";" + Theta + ";" + xA + ";" + yA + ";" + xB + ";" + yB + ";" + xC + ";" + yC + ";" + xD + ";" + yD;
+            string log = distance + ";" + (int)xA + ";" + (int)yA + ";" + (int)xB + ";" + (int)yB + ";" + (int)xC + ";" + (int)yC + ";" + (int)xD + ";" + (int)yD;
 
             using (StreamWriter file = new StreamWriter(path, append: true))
             {
@@ -207,7 +203,7 @@ namespace Interfacerobot
      
     public class ArucoLutElement
     {
-        public double dist0M;    //distance entre l'origine (robot) et le point M en coordonnée (X,Y) de la lut
+        public double dist0M;    
         public double segAB;
         public double segBC;
         public double segCD;
