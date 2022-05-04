@@ -40,16 +40,13 @@ namespace Interfacerobot
 
         ReliableSerialPort serialPort1;
 
-
         public MainWindow()
         {
-            serialPort1 = new ReliableSerialPort("COM3", 460800, Parity.None, 8, StopBits.One);
+            serialPort1 = new ReliableSerialPort("COM7", 460800, Parity.None, 8, StopBits.One);
             serialPort1.DataReceived += SerialPort1_DataReceived;
             serialPort1.Open();
         }
 
-
-        ConcurrentQueue<byte> receivedData = new ConcurrentQueue<byte>();
         private void SerialPort1_DataReceived(object sender, DataReceivedArgs e)
         {
             foreach (var c in e.Data)
@@ -78,8 +75,9 @@ namespace Interfacerobot
             }
         }
 
-        List<ArucoLutElement> ArucoLut = new List<ArucoLutElement>();
+        //liste contenant toutes les valeurs théoriques de la position / taille des tags aruco -> lookup table (lut)
 
+        List<ArucoLutElement> ArucoLut = new List<ArucoLutElement>();
 
         private void Analyze_Click(object sender, RoutedEventArgs e)
         {
@@ -89,15 +87,6 @@ namespace Interfacerobot
                 ArucoLut = new List<ArucoLutElement>();
                 using (var reader = new StreamReader(opfd.FileName))
                 {
-                    //List<int> ThetaAruco = new List<int>();
-                    //List<int> x1List = new List<int>();
-                    //List<int> x2List = new List<int>();
-                    //List<int> x3List = new List<int>();
-                    //List<int> x4List = new List<int>();
-                    //List<int> y1List = new List<int>();
-                    //List<int> y2List = new List<int>();
-                    //List<int> y3List = new List<int>();
-                    //List<int> y4List = new List<int>();
 
                     while (!reader.EndOfStream)
                     {
@@ -106,45 +95,39 @@ namespace Interfacerobot
                         int pos = 0;
 
                         ArucoLutElement lutElement = new ArucoLutElement();
-                        lutElement.xField = int.Parse(values[pos++]);
-                        lutElement.yField = int.Parse(values[pos++]);
-                        lutElement.thetaField = int.Parse(values[pos++]);
+                        double xField = int.Parse(values[pos++]);
+                        double yField = int.Parse(values[pos++]);
+                        lutElement.dist0M = Math.Sqrt(Math.Pow((0 - xField), 2) + Math.Pow((0 - yField), 2));
+                        pos++;
 
-                        double x = int.Parse(values[pos++]);
-                        double y = int.Parse(values[pos++]);
-                        lutElement.pt1 = new PointD(x, y);
-                        x = int.Parse(values[pos++]);
-                        y = int.Parse(values[pos++]);
-                        lutElement.pt2 = new PointD(x, y);
-                        x = int.Parse(values[pos++]);
-                        y = int.Parse(values[pos++]);
-                        lutElement.pt3 = new PointD(x, y);
-                        x = int.Parse(values[pos++]);
-                        y = int.Parse(values[pos++]);
-                        lutElement.pt4 = new PointD(x, y);
+                        double xA = int.Parse(values[pos++]);
+                        double yA = int.Parse(values[pos++]);
+                        double xB = int.Parse(values[pos++]);
+                        double yB = int.Parse(values[pos++]);
+                        double xC = int.Parse(values[pos++]);
+                        double yC = int.Parse(values[pos++]);
+                        double xD = int.Parse(values[pos++]);
+                        double yD = int.Parse(values[pos++]);
 
-                        lutElement.xMeasured = (lutElement.pt1.X + lutElement.pt2.X + lutElement.pt3.X + lutElement.pt4.X) / 4.0;
-                        lutElement.yMeasured = (lutElement.pt1.Y + lutElement.pt2.Y + lutElement.pt3.Y + lutElement.pt4.Y) / 4.0;
+                        lutElement.segAB = Math.Sqrt(Math.Pow((xA - xB), 2) + Math.Pow((yA - yB), 2));
+                        lutElement.segBC = Math.Sqrt(Math.Pow((xB - xC), 2) + Math.Pow((yB - yC), 2));
+                        lutElement.segCD = Math.Sqrt(Math.Pow((xC - xD), 2) + Math.Pow((yC - yD), 2));
+                        lutElement.segDA = Math.Sqrt(Math.Pow((xD - xA), 2) + Math.Pow((yD - yA), 2));
 
                         ArucoLut.Add(lutElement);
 
                         //Génération du symétrique par rapport à l'axe vertical
-
-                        if (lutElement.xField != 0)
+                        //pas necessaire ?
+                        /*if (xField != 0)
                         {
                             ArucoLutElement lutElementSym = new ArucoLutElement();
 
-                            lutElementSym.xField = -lutElement.xField;
-                            lutElementSym.yField = lutElement.yField;
-                            lutElementSym.xMeasured = -lutElement.xMeasured;
-                            lutElementSym.yMeasured = lutElement.yMeasured;
-                            lutElementSym.pt1 = new PointD(-lutElement.pt1.X, lutElement.pt1.Y);
-                            lutElementSym.pt2 = new PointD(-lutElement.pt2.X, lutElement.pt2.Y);
-                            lutElementSym.pt3 = new PointD(-lutElement.pt3.X, lutElement.pt3.Y);
-                            lutElementSym.pt4 = new PointD(-lutElement.pt4.X, lutElement.pt4.Y);
-
+                            lutElementSym.ptA = new PointD(-lutElement.ptA.X, lutElement.ptA.Y);
+                            lutElementSym.ptB = new PointD(-lutElement.ptB.X, lutElement.ptB.Y);
+                            lutElementSym.ptC = new PointD(-lutElement.ptC.X, lutElement.ptC.Y);
+                            lutElementSym.ptD = new PointD(-lutElement.ptD.X, lutElement.ptD.Y);
                             ArucoLut.Add(lutElementSym);
-                        }
+                        }*/
 
                     }
                 }
@@ -154,19 +137,21 @@ namespace Interfacerobot
         double xA, xB, xC, xD, yA, yB, yC, yD;
         string id;
 
-        string[] BaliseArucoViolette = {"51", "52", "53"};
+        string[] BaliseArucoViolette = {"51", "52", "54"};
+        string[] BaliseArucoJaune = { "71", "72", "73" };
 
 
 
         private void AnalyzeData(string[] inputArray)
         {
-            for(int i =0; i< inputArray.Length;i++)
+            for(int i = 0; i< inputArray.Length;i++)
             {
                 inputArray[i] =  inputArray[i].Replace('.', ',');
             }
+
             if(ArucoLut.Count > 0)
             {
-                id = inputArray[1]; 
+                id = inputArray[1].Substring(1); 
                 xA = double.Parse(inputArray[3]);
                 yA = double.Parse(inputArray[4]);
                 xB = double.Parse(inputArray[5]);
@@ -175,8 +160,6 @@ namespace Interfacerobot
                 yC = double.Parse(inputArray[8]);
                 xD = double.Parse(inputArray[9]);
                 yD = double.Parse(inputArray[10]);
-
-                
                 
                 if( BaliseArucoViolette.Contains(id) )
                 {
@@ -184,7 +167,17 @@ namespace Interfacerobot
                     double segBC = Math.Sqrt(Math.Pow((xB - xC), 2) + Math.Pow((yB - yC), 2));
                     double segCD = Math.Sqrt(Math.Pow((xC - xD), 2) + Math.Pow((yC - yD), 2));
                     double segDA = Math.Sqrt(Math.Pow((xD - xA), 2) + Math.Pow((yD - yA), 2));
-                    Console.WriteLine("Distance calculée à partir de la balise" + id + " : " );
+
+                    /// On calcule la distance à chaque element de la LUT
+                    var ArucoClosestList = ArucoLut.OrderBy(p => Math.Abs(p.segAB - segAB)).ToList();
+                    for(int i = 0; i < ArucoClosestList.Count; i++)
+                    {
+                        Console.WriteLine("Dist : " + ArucoClosestList[i].dist0M);
+                    }
+
+                    var closest_value = ArucoClosestList[0];
+                    //Console.WriteLine( segAB + " | " + closest_value.segAB );
+                    Console.WriteLine("Distance calculée à partir de la balise n° " + id + " : " + closest_value.dist0M.ToString("F1") );
                 }
 
                 
@@ -214,19 +207,11 @@ namespace Interfacerobot
      
     public class ArucoLutElement
     {
-        public double xField;
-        public double yField;
-        public double xMeasured;
-        public double yMeasured;
-        public double thetaField;
+        public double dist0M;    //distance entre l'origine (robot) et le point M en coordonnée (X,Y) de la lut
         public double segAB;
         public double segBC;
         public double segCD;
         public double segDA;
-        public PointD pt1;
-        public PointD pt2;
-        public PointD pt3;
-        public PointD pt4;
     }
 
     public class PointD
