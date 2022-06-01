@@ -94,11 +94,11 @@ int main(void) {
 
         }
 
-        for (i = 0; i < CB_RX1_GetDataSize(); i++) {
-            message = CB_RX1_Get();
-            UartDecodeMessage(message);
-            //SendMessage(&message, 1 ) ;
-        }
+//        for (i = 0; i < CB_RX1_GetDataSize(); i++) {
+//            message = CB_RX1_Get();
+//            UartDecodeMessage(message);
+//            //SendMessage(&message, 1 ) ;
+//        }
 
 
     }

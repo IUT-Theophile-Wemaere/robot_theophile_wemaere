@@ -1,6 +1,10 @@
-build/default/production/Asservissement.o:  \
-Asservissement.c  \
- Asservissement.h  \
-robot.h  \
-QEI.h  \
-Utilities.h 
+build/default/production/Asservissement.o: Asservissement.c \
+ Asservissement.h robot.h QEI.h Utilities.h
+
+Asservissement.h:
+
+robot.h:
+
+QEI.h:
+
+Utilities.h:

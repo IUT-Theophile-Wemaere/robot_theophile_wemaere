@@ -1,3 +1,3 @@
-build/default/production/toolbox.o:  \
-toolbox.c  \
-toolbox.h 
+build/default/production/toolbox.o: toolbox.c toolbox.h
+
+toolbox.h:
